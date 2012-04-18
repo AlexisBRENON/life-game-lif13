@@ -53,32 +53,28 @@ public class Grille {
             for(j= 0; j<y; j++){
                 
                 //test Voisin
-                if((i-1)>-1 && (j-1)>-1 
-                        && map.get(new Coordonnee(i - 1, j - 1))!=null)
+                if(map.get(new Coordonnee(((i - 1) % x), ((j - 1) % y )))!=null)
                     voisin++;
                 
-                if((i-1)>-1 && map.get(new Coordonnee(i - 1, j))!=null)
+                if(map.get(new Coordonnee(((i - 1) % x), j))!=null)
                     voisin++;
                 
-                if((i-1)>-1 && (j+1)<(y+1) 
-                        && map.get(new Coordonnee(i - 1, j + 1))!=null)
+                if(map.get(new Coordonnee(((i - 1) % x), ((j + 1) % y))) != null)
                     voisin++;
                 
-                if((j-1)>-1 && map.get(new Coordonnee(i, j - 1))!=null)
+                if(map.get(new Coordonnee(i, ((j - 1) % y ))) != null)
                     voisin++;
                 
-                if((j+1)<y+1 && map.get(new Coordonnee(i, j + 1))!=null)
+                if(map.get(new Coordonnee ( i, ((j + 1) % y)))!=null)
                     voisin++;
                 
-                if((i+1)<x+1 && (j-1)>-1 
-                        && map.get(new Coordonnee(i + 1, j - 1))!=null)
+                if(map.get(new Coordonnee(((i + 1) % x), ((j - 1) % y)))!= null)
                     voisin++;
                 
-                if((i+1)<x+1 && map.get(new Coordonnee(i + 1, j))!=null)
+                if(map.get(new Coordonnee(((i + 1) % x), j))!= null)
                     voisin++;
                 
-                if((i+1)<x+1 && (j+1)<y+1 
-                        && map.get(new Coordonnee(i + 1, j + 1))!=null)
+                if(map.get(new Coordonnee(((i + 1) % x), ((j + 1) % y))) != null)
                     voisin++;
                 
                 //action si voisin
