@@ -7,7 +7,6 @@ package life_game_lif13;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -117,7 +116,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 			for (int j = 0; j < _nbCol; j++) {
 				if (_m.estVivante(j,i)) {
 					_panelGrille.getComponent((i+1)*j).
-							setBackground(Color.black);
+							setBackground(Color.red);
 				} else {
 					_panelGrille.getComponent((i+1)*j).
 							setBackground(Color.white);

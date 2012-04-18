@@ -21,10 +21,9 @@ public class Grille {
         this.y = y;
         this.map= new HashMap<Coordonnee, Cellule>();
         this.mapNext=new HashMap<Coordonnee, Cellule>();
-
-
     }
 
+	@SuppressWarnings ("unchecked")
     public void initGrille(){
         int i, j;
         for(i= 0; i<x; i++){
@@ -44,6 +43,7 @@ public class Grille {
     }
 
 
+	@SuppressWarnings ("unchecked")
     public void etatSuivant(){
         int i, j;
         int voisin =0;
