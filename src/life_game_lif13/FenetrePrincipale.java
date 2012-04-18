@@ -72,7 +72,9 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
 		for (int i = 0; i < _nbLigne*_nbCol; i++) {
-			_panelGrille.add(new JPanel());
+			JPanel p = new JPanel();
+			p.setBackground(Color.white);
+			_panelGrille.add(p);
 		}
 		panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
 

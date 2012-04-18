@@ -4,8 +4,6 @@
  */
 package life_game_lif13;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
-
 /**
  *
  * @author alexis
