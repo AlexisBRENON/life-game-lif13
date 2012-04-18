@@ -14,6 +14,7 @@ import java.util.Random;
 public class Grille {
     private int x, y;
     private  Map <Coordonnee, Cellule> map;
+    private  Map <Coordonnee, Cellule> mapNext;
     
     public Grille(int x, int y){
         int i, j;
@@ -28,6 +29,7 @@ public class Grille {
                 }
             }
         }
+        mapNext=map;
     }
     
     public void etatSuivant(){
@@ -36,29 +38,50 @@ public class Grille {
         
         for(i= 0; i<x; i++){
             for(j= 0; j<y; j++){
-                
                 //test Voisin
-                if(map.get(new Coordonnee(i - 1, j - 1))!=null)
+                if((i-1)>-1 && (j-1)>-1 
+                        && map.get(new Coordonnee(i - 1, j - 1))!=null)
                     voisin++;
-                if(map.get(new Coordonnee(i - 1, j))!=null)
-                        voisin++;
-                if(map.get(new Coordonnee(i - 1, j + 1))!=null)
-                        voisin++;
-                if(map.get(new Coordonnee(i, j - 1))!=null)
-                        voisin++;
-                if(map.get(new Coordonnee(i, j + 1))!=null)
-                        voisin++;
-                if(map.get(new Coordonnee(i + 1, j - 1))!=null)
-                        voisin++;
-                if(map.get(new Coordonnee(i + 1, j))!=null)
-                        voisin++;
-                if(map.get(new Coordonnee(i + 1, j + 1))!=null)
-                        voisin++;
+                
+                if((i-1)>-1 && map.get(new Coordonnee(i - 1, j))!=null)
+                    voisin++;
+                
+                if((i-1)>-1 && (j+1)<(y+1) 
+                        && map.get(new Coordonnee(i - 1, j + 1))!=null)
+                    voisin++;
+                
+                if((j-1)>-1 && map.get(new Coordonnee(i, j - 1))!=null)
+                    voisin++;
+                
+                if((j+1)<y+1 && map.get(new Coordonnee(i, j + 1))!=null)
+                    voisin++;
+                
+                if((i+1)<x+1 && (j-1)>-1 
+                        && map.get(new Coordonnee(i + 1, j - 1))!=null)
+                    voisin++;
+                
+                if((i+1)<x+1 && map.get(new Coordonnee(i + 1, j))!=null)
+                    voisin++;
+                
+                if((i+1)<x+1 && (j+1)<y+1 
+                        && map.get(new Coordonnee(i + 1, j + 1))!=null)
+                    voisin++;
                 
                 //action si voisin
+                Coordonnee coord=new Coordonnee(i, j);
+                if(map.get(coord)!=null){
+                    if(voisin==0 || voisin==1 || voisin > 3)
+                        mapNext.remove(coord);
+                }
+                else if(voisin==3)
+                        mapNext.put(coord, new Cellule(coord, true));
                 
+                //reinitialise le nombre de voisin.
+                voisin=0;
             }
         }
+        
+        map=mapNext;
     }
     
     
