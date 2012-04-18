@@ -5,7 +5,6 @@
 package life_game_lif13;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -16,16 +15,16 @@ public class Grille {
     private int x, y;
     private  HashMap <Coordonnee, Cellule> map;
     private  HashMap <Coordonnee, Cellule> mapNext;
-    
+
     public Grille(int x, int y){
         this.x = x;
         this.y = y;
         this.map= new HashMap<Coordonnee, Cellule>();
         this.mapNext=new HashMap<Coordonnee, Cellule>();
-        
-        
+
+
     }
-    
+
     public void initGrille(){
         int i, j;
         for(i= 0; i<x; i++){
@@ -35,48 +34,48 @@ public class Grille {
                 }
             }
         }
-        
+
         this.mapNext=(HashMap<Coordonnee, Cellule>) this.map.clone();
     }
-    
+
     public void clearGrille(){
         this.map.clear();
         this.mapNext.clear();
     }
-    
-    
+
+
     public void etatSuivant(){
         int i, j;
         int voisin =0;
-        
+
         for(i= 0; i<x; i++){
             for(j= 0; j<y; j++){
-                
+
                 //test Voisin
                 if(map.get(new Coordonnee(((i - 1) % x), ((j - 1) % y )))!=null)
                     voisin++;
-                
+
                 if(map.get(new Coordonnee(((i - 1) % x), j))!=null)
                     voisin++;
-                
+
                 if(map.get(new Coordonnee(((i - 1) % x), ((j + 1) % y))) != null)
                     voisin++;
-                
+
                 if(map.get(new Coordonnee(i, ((j - 1) % y ))) != null)
                     voisin++;
-                
+
                 if(map.get(new Coordonnee ( i, ((j + 1) % y)))!=null)
                     voisin++;
-                
+
                 if(map.get(new Coordonnee(((i + 1) % x), ((j - 1) % y)))!= null)
                     voisin++;
-                
+
                 if(map.get(new Coordonnee(((i + 1) % x), j))!= null)
                     voisin++;
-                
+
                 if(map.get(new Coordonnee(((i + 1) % x), ((j + 1) % y))) != null)
                     voisin++;
-                
+
                 //action si voisin
                 Coordonnee coord=new Coordonnee(i, j);
                 if(map.get(coord)!=null){
@@ -88,14 +87,26 @@ public class Grille {
                 }
                 else if(voisin==3)
                         mapNext.put(coord, new Cellule(coord, true));
-                
+
                 //reinitialise le nombre de voisin.
                 voisin=0;
             }
         }
-        
+
         this.map=(HashMap<Coordonnee, Cellule>) this.mapNext.clone();
     }
-    
-    
+
+	public boolean estVivante (int x, int y) {
+		return (map.containsKey(new Coordonnee(x, y)));
+	}
+
+	public int getX () {
+		return x;
+	}
+
+	public int getY () {
+		return y;
+	}
+
+
 }
