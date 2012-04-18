@@ -18,23 +18,32 @@ public class Grille {
     private  HashMap <Coordonnee, Cellule> mapNext;
     
     public Grille(int x, int y){
-        int i, j;
-        
         this.x = x;
         this.y = y;
         this.map= new HashMap<Coordonnee, Cellule>();
         this.mapNext=new HashMap<Coordonnee, Cellule>();
         
         
+    }
+    
+    public void initGrille(){
+        int i, j;
         for(i= 0; i<x; i++){
             for(j= 0; j<y; j++){
                 if(new Random().nextBoolean()){
-                    map.put(new Coordonnee(i, j), new Cellule(new Coordonnee(i, j), true));
+                    this.map.put(new Coordonnee(i, j), new Cellule(new Coordonnee(i, j), true));
                 }
             }
         }
-        mapNext=(HashMap<Coordonnee, Cellule>) map.clone();
+        
+        this.mapNext=(HashMap<Coordonnee, Cellule>) this.map.clone();
     }
+    
+    public void clearGrille(){
+        this.map.clear();
+        this.mapNext.clear();
+    }
+    
     
     public void etatSuivant(){
         int i, j;
@@ -89,7 +98,7 @@ public class Grille {
             }
         }
         
-        map=(HashMap<Coordonnee, Cellule>) mapNext.clone();
+        this.map=(HashMap<Coordonnee, Cellule>) this.mapNext.clone();
     }
     
     

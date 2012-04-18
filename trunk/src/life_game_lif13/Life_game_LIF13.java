@@ -22,6 +22,6 @@ public class Life_game_LIF13 {
                 new FenetrePrincipale(m).setVisible(true);
             }
         });
-		m.lancerThread();
+                m.lancerThread();
     }
 }
