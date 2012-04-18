@@ -33,8 +33,9 @@ public class Grille {
                 }
             }
         }
-
-        this.mapNext=(HashMap<Coordonnee, Cellule>) this.map.clone();
+        this.mapNext.clear();
+        this.mapNext.putAll(map);
+        //this.mapNext=(HashMap<Coordonnee, Cellule>) this.map.clone();
     }
 
     public void clearGrille(){
@@ -47,7 +48,7 @@ public class Grille {
     public void etatSuivant(){
         int i, j;
         int voisin = 0;
-
+        System.out.println("etat--------------------------");
         for(i= 0; i<x; i++){
             for(j= 0; j<y; j++){
 
@@ -80,19 +81,21 @@ public class Grille {
                 Coordonnee coord=new Coordonnee(i, j);
                 if(map.get(coord)!=null){
                     if(voisin==0 || voisin==1 || voisin > 3){
+                        System.out.println("voisin: "+ voisin + " x,y: "+ i+","+j);
                         mapNext.remove(coord);
                     }
                 }
-                else if(voisin==3)
+                else if(map.get(coord)==null && voisin==3)
                         mapNext.put(coord, new Cellule(coord, true));
 
                 //reinitialise le nombre de voisin.
                 voisin=0;
             }
+        }       
+        this.map.clear();
+        map.putAll(mapNext);
+       // this.map=(HashMap<Coordonnee, Cellule>) this.mapNext.clone();
         }
-
-        this.map=(HashMap<Coordonnee, Cellule>) this.mapNext.clone();
-    }
 
 	public boolean estVivante (int x, int y) {
 		return (map.containsKey(new Coordonnee(x, y)));
@@ -105,6 +108,7 @@ public class Grille {
 	public int getY () {
 		return y;
 	}
+        
 
 
 }
