@@ -14,12 +14,12 @@ public class Life_game_LIF13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Modele m = new Modele();
+        final Modele m = new Modele();
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new FenetrePrincipale().setVisible(true);
+                new FenetrePrincipale(m).setVisible(true);
             }
         });
 		m.lancerThread();
