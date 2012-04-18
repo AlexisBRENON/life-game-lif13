@@ -14,19 +14,20 @@ public class Modele extends Observable implements Runnable {
     Grille grille;
 
     public Modele(){
-		grille = new Grille(10,10);
+		this(10,10);
+	}
+
+	public Modele(int x, int y){
+		grille = new Grille(x,y);
+		grille.initGrille();
 	}
 
 	public Grille getGrille () {
 		return grille;
 	}
 
-	public Modele(int x, int y){
-		grille = new Grille(x,y);
-	}
-
 	public void lancerThread () {
-		new ThreadSimu(1,
+		new ThreadSimu(0.25f,
 					   this).start();
 	}
 
