@@ -14,14 +14,10 @@ public class Life_game_LIF13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        final Modele m = new Modele();
+        Modele m = new Modele(20,20);
+		FenetrePrincipale f = new FenetrePrincipale(m);
 
-		java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new FenetrePrincipale(m).setVisible(true);
-            }
-        });
+		new Thread(f).start();
                 m.lancerThread();
     }
 }

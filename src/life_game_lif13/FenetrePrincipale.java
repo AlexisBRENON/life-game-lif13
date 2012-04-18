@@ -5,6 +5,7 @@
 package life_game_lif13;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -21,7 +22,7 @@ import javax.swing.*;
  *
  * @author alexis
  */
-public class FenetrePrincipale extends JFrame implements Observer {
+public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	private static final long serialVersionUID = 1L;
 
 	private int _nbCol;
@@ -40,16 +41,15 @@ public class FenetrePrincipale extends JFrame implements Observer {
 	/* Fin des composants */
 
 	public FenetrePrincipale (Modele m) {
-		_nbCol = 10;
-		_nbLigne = 10;
 		_m = m;
+		_nbCol = m.getGrille().getX();
+		_nbLigne = m.getGrille().getY();
 		build();
-
 	}
 
 	private void build() {
 		/* Création de l'interface */
-		this.setMinimumSize(new Dimension(800, 600));
+		this.setMinimumSize(new Dimension(750, 600));
 
 		JMenu menuFichier = new JMenu("Fichier");
 		JMenu menuEdition = new JMenu("Edition");
@@ -77,10 +77,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		}
 		panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
 
-		JPanel panelBoutons = new JPanel();
-		BoxLayout box = new BoxLayout(panelBoutons,
-									  BoxLayout.Y_AXIS);
-		panelBoutons.setLayout(box);
+		JPanel panelBoutons = new JPanel(new GridLayout(3, 0, 5, 5));
 		_boutonLancer = new JButton("Lancer !");
 		_boutonPause = new JButton("Pause");
 		_boutonEffacer = new JButton("Effacer");
@@ -104,13 +101,29 @@ public class FenetrePrincipale extends JFrame implements Observer {
 						onQuitAction();
 					}
 				});
+		_m.addObserver(this);
+	}
 
+	@Override
+	public void run () {
+		this.setVisible(true);
 	}
 
 	@Override
 	public void update (Observable o,
 						Object arg) {
 		System.out.print("Update\n");
+		for (int i = 0; i < _nbLigne; i++) {
+			for (int j = 0; j < _nbCol; j++) {
+				if (_m.estVivante(j,i)) {
+					_panelGrille.getComponent((i+1)*j).
+							setBackground(Color.black);
+				} else {
+					_panelGrille.getComponent((i+1)*j).
+							setBackground(Color.white);
+				}
+			}
+		}
 	}
 
 	private void onQuitAction () {

@@ -11,10 +11,18 @@ import java.util.Observable;
  * @author t0rp
  */
 public class Modele extends Observable implements Runnable {
-        Grille grille;
+    Grille grille;
 
     public Modele(){
 		grille = new Grille(10,10);
+	}
+
+	public Grille getGrille () {
+		return grille;
+	}
+
+	public Modele(int x, int y){
+		grille = new Grille(x,y);
 	}
 
 	public void lancerThread () {
@@ -24,7 +32,6 @@ public class Modele extends Observable implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("calcul: ");
 		calcul();
 		setChanged();
 		notifyObservers();
@@ -34,4 +41,7 @@ public class Modele extends Observable implements Runnable {
         grille.etatSuivant();
     }
 
+	public boolean estVivante(int x, int y) {
+		return grille.estVivante(x,y);
+	}
 }
