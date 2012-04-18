@@ -13,8 +13,8 @@ import java.util.Random;
  */
 public class Grille {
     private int x, y;
-    private  HashMap <Coordonnee, Cellule> map;
-    private  HashMap <Coordonnee, Cellule> mapNext;
+    private HashMap <Coordonnee, Cellule> map;
+    private HashMap <Coordonnee, Cellule> mapNext;
 
     public Grille(int x, int y){
         this.x = x;
@@ -46,7 +46,7 @@ public class Grille {
 	@SuppressWarnings ("unchecked")
     public void etatSuivant(){
         int i, j;
-        int voisin =0;
+        int voisin = 0;
 
         for(i= 0; i<x; i++){
             for(j= 0; j<y; j++){
@@ -63,7 +63,7 @@ public class Grille {
 
                 if(map.get(new Coordonnee(i, ((j - 1) % y ))) != null)
                     voisin++;
-
+				
                 if(map.get(new Coordonnee ( i, ((j + 1) % y)))!=null)
                     voisin++;
 
@@ -80,8 +80,6 @@ public class Grille {
                 Coordonnee coord=new Coordonnee(i, j);
                 if(map.get(coord)!=null){
                     if(voisin==0 || voisin==1 || voisin > 3){
-                        //mapNext.get(coord).setEtatSuivant(false);
-                        System.out.println(i+" "+j);
                         mapNext.remove(coord);
                     }
                 }

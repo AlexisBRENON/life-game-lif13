@@ -44,10 +44,13 @@ public class Cellule {
 
     @Override
     public String toString() {
-        return "Cellule{" + coord.toString() + ", etatCourant=" + etatCourant 
+        return "Cellule{" + coord.toString() + ", etatCourant=" + etatCourant
                 + ", etatSuivant=" + etatSuivant + '}';
     }
-    
-    
-    
+
+	@Override
+    public Cellule clone () {
+		return new Cellule(coord.clone(), etatCourant);
+	}
+
 }
