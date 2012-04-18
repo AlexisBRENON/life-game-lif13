@@ -16,10 +16,15 @@ public class ThreadSimu extends Thread{
     private boolean etatExec;
     private Runnable monRunnable;
 
-    public ThreadSimu(int tempsPause, boolean etatExec) {
+    public ThreadSimu(Modele aThis, int tempsPause, boolean etatExec) {
         super();
         this.tempsPause = tempsPause;
         this.etatExec = etatExec;
+    }
+
+    public ThreadSimu(Modele aThis) {
+        super(aThis);
+        
     }
 
 
@@ -33,7 +38,8 @@ public class ThreadSimu extends Thread{
             try {
                 sleep(tempsPause);
             } catch (InterruptedException ex) {
-                Logger.getLogger(ThreadSimu.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ThreadSimu.class.getName()).log(Level.SEVERE, 
+                        null, ex);
             }
         }
     }
