@@ -77,27 +77,6 @@ public class Grille {
 				if(map.containsKey(new Coordonnee(((i + 1) % x), ((j + 1)%y))))
                     voisin++;
 
-				/*if(map.get(new Coordonnee(((i - 1 + x) % x), j))!=null)
-                    voisin++;
-
-                if(map.get(new Coordonnee(((i - 1 + x) % x), ((j + 1) % y))) != null)
-                    voisin++;
-
-                if(map.get(new Coordonnee(i, ((j - 1 + y) % y ))) != null)
-                    voisin++;
-
-                if(map.get(new Coordonnee ( i, ((j + 1) % y)))!=null)
-                    voisin++;
-
-                if(map.get(new Coordonnee(((i + 1) % x), ((j - 1 + y) % y)))!= null)
-                    voisin++;
-
-                if(map.get(new Coordonnee(((i + 1) % x), j))!= null)
-                    voisin++;
-
-                if(map.get(new Coordonnee(((i + 1) % x), ((j + 1) % y))) != null)
-                    voisin++;
-*/
 				//System.out.println("("+ i+","+j+") -> "+voisin+"voisins");
                 //action si voisin
                 Coordonnee coord=new Coordonnee(i, j);
