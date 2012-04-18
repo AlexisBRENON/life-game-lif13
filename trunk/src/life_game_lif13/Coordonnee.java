@@ -60,5 +60,12 @@ public class Coordonnee {
 		this._y = _y;
 	}
 
+    @Override
+    public String toString() {
+        return "Coordonnee{" + "_x=" + _x + ", _y=" + _y + '}';
+    }
+        
+        
+
 
 }

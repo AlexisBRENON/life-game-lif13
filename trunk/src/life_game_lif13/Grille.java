@@ -4,6 +4,7 @@
  */
 package life_game_lif13;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,14 +14,17 @@ import java.util.Random;
  */
 public class Grille {
     private int x, y;
-    private  Map <Coordonnee, Cellule> map;
-    private  Map <Coordonnee, Cellule> mapNext;
+    private  HashMap <Coordonnee, Cellule> map;
+    private  HashMap <Coordonnee, Cellule> mapNext;
     
     public Grille(int x, int y){
         int i, j;
         
         this.x = x;
         this.y = y;
+        this.map= new HashMap<Coordonnee, Cellule>();
+        this.mapNext=new HashMap<Coordonnee, Cellule>();
+        
         
         for(i= 0; i<x; i++){
             for(j= 0; j<y; j++){
@@ -29,7 +33,7 @@ public class Grille {
                 }
             }
         }
-        mapNext=map;
+        mapNext=(HashMap<Coordonnee, Cellule>) map.clone();
     }
     
     public void etatSuivant(){
@@ -38,6 +42,7 @@ public class Grille {
         
         for(i= 0; i<x; i++){
             for(j= 0; j<y; j++){
+                
                 //test Voisin
                 if((i-1)>-1 && (j-1)>-1 
                         && map.get(new Coordonnee(i - 1, j - 1))!=null)
@@ -70,8 +75,11 @@ public class Grille {
                 //action si voisin
                 Coordonnee coord=new Coordonnee(i, j);
                 if(map.get(coord)!=null){
-                    if(voisin==0 || voisin==1 || voisin > 3)
+                    if(voisin==0 || voisin==1 || voisin > 3){
+                        //mapNext.get(coord).setEtatSuivant(false);
+                        System.out.println(i+" "+j);
                         mapNext.remove(coord);
+                    }
                 }
                 else if(voisin==3)
                         mapNext.put(coord, new Cellule(coord, true));
@@ -81,7 +89,7 @@ public class Grille {
             }
         }
         
-        map=mapNext;
+        map=(HashMap<Coordonnee, Cellule>) mapNext.clone();
     }
     
     
