@@ -39,4 +39,21 @@ public class ThreadSimu extends Thread {
 			}
 		}
 	}
+
+	public boolean isEtatExec () {
+		return etatExec;
+	}
+
+	public void setEtatExec (boolean etatExec) {
+		this.etatExec = etatExec;
+	}
+
+	public float getTempsPause () {
+		return tempsPause;
+	}
+
+	public void setTempsPause (float tempsPause) {
+		this.tempsPause = tempsPause;
+	}
+	
 }

@@ -12,6 +12,7 @@ import java.util.Observable;
  */
 public class Modele extends Observable implements Runnable {
     Grille grille;
+	ThreadSimu t;
 
     public Modele(){
 		this(10,10);
@@ -20,6 +21,7 @@ public class Modele extends Observable implements Runnable {
 	public Modele(int x, int y){
 		grille = new Grille(x,y);
 		grille.initGrille();
+		t = new ThreadSimu(5f, this);
 	}
 
 	public Grille getGrille () {
@@ -27,8 +29,7 @@ public class Modele extends Observable implements Runnable {
 	}
 
 	public void lancerThread () {
-		new ThreadSimu(15f,
-					   this).start();
+		t.start();
 	}
 
     @Override
@@ -44,5 +45,13 @@ public class Modele extends Observable implements Runnable {
 
 	public boolean estVivante(int x, int y) {
 		return grille.estVivante(x,y);
+	}
+
+	public void switchPause () {
+		t.setEtatExec(!t.isEtatExec());
+	}
+
+	public void clear () {
+		grille.clearGrille();
 	}
 }
