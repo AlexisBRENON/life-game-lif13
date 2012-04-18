@@ -27,7 +27,7 @@ public class Modele extends Observable implements Runnable {
 	}
 
 	public void lancerThread () {
-		new ThreadSimu(0.25f,
+		new ThreadSimu(15f,
 					   this).start();
 	}
 
