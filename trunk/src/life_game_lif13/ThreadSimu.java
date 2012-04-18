@@ -13,10 +13,10 @@ import java.util.logging.Logger;
  */
 public class ThreadSimu extends Thread {
     private Runnable modele;
-	private int tempsPause;
+	private float tempsPause;
     private boolean etatExec;
 
-    public ThreadSimu(int tempsPause, Runnable modele) {
+    public ThreadSimu(float tempsPause, Runnable modele) {
         super();
         this.tempsPause = tempsPause;
         this.etatExec = true;
@@ -30,7 +30,7 @@ public class ThreadSimu extends Thread {
 				(new Thread(modele)).start();
 			}
 			try {
-				Thread.sleep(tempsPause*1000);
+				Thread.sleep(((long) tempsPause*1000));
 			} catch (InterruptedException ex) {
 				Logger.getLogger(ThreadSimu.class.getName()).
 						log(Level.SEVERE,
