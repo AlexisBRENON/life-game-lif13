@@ -35,7 +35,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	private JMenuItem _itemAPropos;
 	private JPanel _panelGrille;
 	private JButton _boutonLancer;
-	private JButton _boutonPause;
+	private JToggleButton _boutonPause;
 	private JButton _boutonEffacer;
 	/* Fin des composants */
 
@@ -80,7 +80,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 		JPanel panelBoutons = new JPanel(new GridLayout(3, 0, 5, 5));
 		_boutonLancer = new JButton("Lancer !");
-		_boutonPause = new JButton("Pause");
+		_boutonPause = new JToggleButton("Pause");
 		_boutonEffacer = new JButton("Effacer");
 		panelBoutons.add(_boutonLancer);
 		panelBoutons.add(_boutonPause);
@@ -88,6 +88,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		panelPrincipal.add(panelBoutons, BorderLayout.EAST);
 
 		/* Connection des signaux */
+		_m.addObserver(this);
 		this.addWindowListener(
 			new WindowAdapter() {
 				@Override
@@ -102,7 +103,31 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 						onQuitAction();
 					}
 				});
-		_m.addObserver(this);
+		_boutonLancer.addActionListener(
+				new ActionListener() {
+			@Override
+			public void actionPerformed (ActionEvent e) {
+				onLaunchAction();
+			}
+		});
+
+		_boutonPause.addActionListener(
+				new ActionListener() {
+
+			@Override
+			public void actionPerformed (ActionEvent e) {
+				onPauseAction();
+			}
+		});
+
+		_boutonEffacer.addActionListener(
+				new ActionListener() {
+
+			@Override
+			public void actionPerformed (ActionEvent e) {
+				onClearAction();
+			}
+		});
 	}
 
 	@Override
@@ -116,10 +141,12 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		for (int i = 0; i < _nbLigne; i++) {
 			for (int j = 0; j < _nbCol; j++) {
 				if (_m.estVivante(j,i)) {
-					_panelGrille.getComponent((i+1)*j).
+					System.out.println(j+","+i+" vivante");
+					_panelGrille.getComponentAt(j,i).
 							setBackground(Color.red);
 				} else {
-					_panelGrille.getComponent((i+1)*j).
+					System.out.println(j+","+i+" morte");
+					_panelGrille.getComponentAt(j,i).
 							setBackground(Color.white);
 				}
 			}
@@ -128,5 +155,25 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 	private void onQuitAction () {
 		System.exit(0);
+	}
+
+	private void onLaunchAction() {
+		_m.lancerThread();
+		_boutonLancer.setEnabled(false);
+	}
+
+	private void onPauseAction() {
+		_m.switchPause();
+		_boutonPause.setSelected((_boutonPause.isSelected()));
+	}
+
+	private void onClearAction() {
+		for (int i = 0; i < _nbLigne; i++) {
+			for (int j = 0; j < _nbCol; j++) {
+				_panelGrille.getComponent((i+1)*j).
+						setBackground(Color.white);
+			}
+		}
+		_m.clear();
 	}
 }
