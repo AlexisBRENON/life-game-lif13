@@ -4,6 +4,8 @@
  */
 package life_game_lif13;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
+
 /**
  *
  * @author alexis
@@ -64,8 +66,11 @@ public class Coordonnee {
     public String toString() {
         return "Coordonnee{" + "_x=" + _x + ", _y=" + _y + '}';
     }
-        
-        
+
+	@Override
+	public Coordonnee clone () {
+		return new Coordonnee(_x, _y);
+	}
 
 
 }

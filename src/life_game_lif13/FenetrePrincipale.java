@@ -111,7 +111,6 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	@Override
 	public void update (Observable o,
 						Object arg) {
-		System.out.print("Update\n");
 		for (int i = 0; i < _nbLigne; i++) {
 			for (int j = 0; j < _nbCol; j++) {
 				if (_m.estVivante(j,i)) {
