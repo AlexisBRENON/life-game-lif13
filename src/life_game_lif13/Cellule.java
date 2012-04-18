@@ -17,6 +17,36 @@ public class Cellule {
         this.etatCourant = etat;
         this.etatSuivant=etat;
     }
+
+    public Coordonnee getCoord() {
+        return coord;
+    }
+
+    public boolean isEtatCourant() {
+        return etatCourant;
+    }
+
+    public boolean isEtatSuivant() {
+        return etatSuivant;
+    }
+
+    public void setCoord(Coordonnee coord) {
+        this.coord = coord;
+    }
+
+    public void setEtatCourant(boolean etatCourant) {
+        this.etatCourant = etatCourant;
+    }
+
+    public void setEtatSuivant(boolean etatSuivant) {
+        this.etatSuivant = etatSuivant;
+    }
+
+    @Override
+    public String toString() {
+        return "Cellule{" + coord.toString() + ", etatCourant=" + etatCourant 
+                + ", etatSuivant=" + etatSuivant + '}';
+    }
     
     
     

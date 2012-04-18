@@ -11,18 +11,22 @@ import java.util.logging.Logger;
  *
  * @author t0rp
  */
-public class ThreadSimu extends Thread{
+public class ThreadSimu extends Thread implements Runnable{
     private int tempsPause;
     private boolean etatExec;
     private Runnable monRunnable;
-
-    public ThreadSimu(Modele aThis, int tempsPause, boolean etatExec) {
+    
+    
+    
+    public ThreadSimu(Runnable aThis, int tempsPause, boolean etatExec) {
         super();
         this.tempsPause = tempsPause;
         this.etatExec = etatExec;
+        this.monRunnable = aThis;
+        
     }
 
-    public ThreadSimu(Modele aThis) {
+    public ThreadSimu(Runnable aThis) {
         super(aThis);
         
     }
@@ -33,9 +37,10 @@ public class ThreadSimu extends Thread{
     public void run() {
         while(true){
             if(etatExec){
-                monRunnable.run();
+               monRunnable.run();
             }
             try {
+                System.out.println("ok");
                 sleep(tempsPause);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ThreadSimu.class.getName()).log(Level.SEVERE, 
