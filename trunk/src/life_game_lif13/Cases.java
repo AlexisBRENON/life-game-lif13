@@ -4,10 +4,12 @@
  */
 package life_game_lif13;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author t0rp
  */
-public class Cases extends Jpanel{
+public class Cases extends JPanel{
     
 }
