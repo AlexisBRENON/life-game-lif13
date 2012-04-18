@@ -11,42 +11,32 @@ import java.util.logging.Logger;
  *
  * @author t0rp
  */
-public class ThreadSimu extends Thread implements Runnable{
-    private int tempsPause;
+public class ThreadSimu extends Thread {
+    private Runnable modele;
+	private int tempsPause;
     private boolean etatExec;
-    private Runnable monRunnable;
-    
-    
-    
-    public ThreadSimu(Runnable aThis, int tempsPause, boolean etatExec) {
+
+    public ThreadSimu(int tempsPause, Runnable modele) {
         super();
         this.tempsPause = tempsPause;
-        this.etatExec = etatExec;
-        this.monRunnable = aThis;
-        
-    }
+        this.etatExec = true;
+		this.modele = modele;
+	}
 
-    public ThreadSimu(Runnable aThis) {
-        super(aThis);
-        
-    }
-
-
-    
-    @Override
-    public void run() {
-        while(true){
-            if(etatExec){
-               monRunnable.run();
-            }
-            try {
-                System.out.println("ok");
-                sleep(tempsPause);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ThreadSimu.class.getName()).log(Level.SEVERE, 
-                        null, ex);
-            }
-        }
-    }
-    
+	@Override
+	public void run () {
+		while (true) {
+			if (etatExec) {
+				(new Thread(modele)).start();
+			}
+			try {
+				Thread.sleep(tempsPause*1000);
+			} catch (InterruptedException ex) {
+				Logger.getLogger(ThreadSimu.class.getName()).
+						log(Level.SEVERE,
+							null,
+							ex);
+			}
+		}
+	}
 }

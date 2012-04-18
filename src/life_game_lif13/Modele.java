@@ -12,32 +12,26 @@ import java.util.Observable;
  */
 public class Modele extends Observable implements Runnable {
         Grille grille;
-        Thread t;
-    
+
     public Modele(){
-        
-        int tempsPause =1;
-        t=new ThreadSimu(this, tempsPause, true);
-        t.start();
-        
-    }
+		grille = new Grille(10,10);
+	}
+
+	public void lancerThread () {
+		new ThreadSimu(1,
+					   this).start();
+	}
 
     @Override
     public void run() {
-        int x, y;
-        x=10;
-        y=10;
-        grille= new Grille(x,y);
-        while(true){
-            
-            System.out.println("calcul: ");
-            calcul();
-        }
+        System.out.println("calcul: ");
+		calcul();
+		setChanged();
+		notifyObservers();
     }
-   
+
     public void calcul(){
         grille.etatSuivant();
-        
     }
-    
+
 }

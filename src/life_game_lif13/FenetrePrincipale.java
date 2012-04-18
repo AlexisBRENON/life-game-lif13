@@ -26,6 +26,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 
 	private int _nbCol;
 	private int _nbLigne;
+	private Modele _m;
 
 	/* Composants de la fenêtre */
 	private JMenuItem _itemEnregistrer;
@@ -36,13 +37,12 @@ public class FenetrePrincipale extends JFrame implements Observer {
 	private JButton _boutonLancer;
 	private JButton _boutonPause;
 	private JButton _boutonEffacer;
-
-
 	/* Fin des composants */
 
-	public FenetrePrincipale () {
+	public FenetrePrincipale (Modele m) {
 		_nbCol = 10;
 		_nbLigne = 10;
+		_m = m;
 		build();
 
 	}
