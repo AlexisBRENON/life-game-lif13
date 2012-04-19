@@ -83,7 +83,7 @@ public class Grille {
 				if(map.get(coord)!=null) {System.out.print(coord.toString()+"\n");}
                 if(map.get(coord)!=null){
                     if(voisin==2 || voisin==3){
-						mapNext.put(coord, new Cellule(coord, true));
+			mapNext.put(coord, new Cellule(coord, true));
                     }
                 }
                 else if(map.get(coord) == null && voisin == 3) {
