@@ -14,7 +14,7 @@ public class Life_game_LIF13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Modele m = new Modele(3,3);
+        Modele m = new Modele(10,15);
 		FenetrePrincipale f = new FenetrePrincipale(m);
 
 		new Thread(f).start();

@@ -8,13 +8,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 
 
 /**
@@ -37,12 +36,14 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	private JButton _boutonLancer;
 	private JToggleButton _boutonPause;
 	private JButton _boutonEffacer;
+	private JPanel[][] _cellules;
 	/* Fin des composants */
 
 	public FenetrePrincipale (Modele m) {
 		_m = m;
 		_nbCol = m.getGrille().getX();
 		_nbLigne = m.getGrille().getY();
+		_cellules = new JPanel[_nbLigne][_nbCol];
 		build();
 	}
 
@@ -71,10 +72,39 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		this.setContentPane(panelPrincipal);
 
 		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
-		for (int i = 0; i < _nbLigne*_nbCol; i++) {
-			JPanel p = new JPanel();
-			p.setBackground(Color.white);
-			_panelGrille.add(p);
+		for (int i = 0; i < _nbLigne; i++) {
+			for (int j = 0; j < _nbCol; j++) {
+				_cellules[i][j] = new JPanel();
+				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+				_cellules[i][j].setBackground(Color.white);
+				_cellules[i][j].addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseClicked (MouseEvent e) {
+
+					}
+
+					@Override
+					public void mousePressed (MouseEvent e) {
+
+					}
+
+					@Override
+					public void mouseReleased (MouseEvent e) {
+					}
+
+					@Override
+					public void mouseEntered (MouseEvent e) {
+						onMouseEnteredOnCell(e);
+					}
+
+					@Override
+					public void mouseExited (MouseEvent e) {
+						onMouseExitedCell(e);
+					}
+				});
+				_panelGrille.add(_cellules[i][j]);
+			}
 		}
 		panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
 
@@ -141,13 +171,11 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		for (int i = 0; i < _nbLigne; i++) {
 			for (int j = 0; j < _nbCol; j++) {
 				if (_m.estVivante(j,i)) {
-					System.out.println(j+","+i+" vivante");
-					_panelGrille.getComponentAt(j,i).
-							setBackground(Color.red);
+					//System.out.println(j+","+i+" vivante");
+					_cellules[i][j].setBackground(Color.red);
 				} else {
-					System.out.println(j+","+i+" morte");
-					_panelGrille.getComponentAt(j,i).
-							setBackground(Color.white);
+					//System.out.println(j+","+i+" morte");
+					_cellules[i][j].setBackground(Color.white);
 				}
 			}
 		}
@@ -175,5 +203,17 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 			}
 		}
 		_m.clear();
+	}
+
+	public void onMouseEnteredOnCell(MouseEvent e) {
+		if (e.getComponent() instanceof JPanel) {
+			((JPanel)e.getComponent()).setBackground(Color.gray);
+		}
+	}
+
+	public void onMouseExitedCell (MouseEvent e) {
+		if (e.getComponent() instanceof JPanel) {
+			((JPanel)e.getComponent()).setBackground(Color.white);
+		}
 	}
 }

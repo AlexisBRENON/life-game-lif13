@@ -21,7 +21,7 @@ public class Modele extends Observable implements Runnable {
 	public Modele(int x, int y){
 		grille = new Grille(x,y);
 		grille.initGrille();
-		t = new ThreadSimu(5f, this);
+		t = new ThreadSimu(0.5f, this);
 	}
 
 	public Grille getGrille () {

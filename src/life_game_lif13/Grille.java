@@ -26,15 +26,18 @@ public class Grille {
 	@SuppressWarnings ("unchecked")
     public void initGrille(){
         int i, j;
-        for(i= 0; i<x; i++){
-            for(j= 0; j<y; j++){
-                if(new Random().nextBoolean()){
-                    this.map.put(new Coordonnee(i, j), new Cellule(new Coordonnee(i, j), true));
-                }
-            }
-        }
+		int counter = 0;
+		do {
+		  for(i= 0; i<x; i++){
+	            for(j= 0; j<y; j++){
+	                if(new Random().nextBoolean()){
+	                    this.map.put(new Coordonnee(i, j), new Cellule(new Coordonnee(i, j), true));
+						counter++;
+	                }
+	            }
+	        }
+		} while (counter < (10f/100f)*(x*y));
         this.mapNext.clear();
-		System.out.print(map.toString());
     }
 
     public void clearGrille(){
@@ -80,8 +83,8 @@ public class Grille {
 				//System.out.println("("+ i+","+j+") -> "+voisin+"voisins");
                 //action si voisin
                 Coordonnee coord=new Coordonnee(i, j);
-				if(map.get(coord)!=null) {System.out.print(coord.toString()+"\n");}
-                if(map.get(coord)!=null){
+				//if(map.containsKey(coord)) {System.out.println(coord.toString()+"\n");}
+                if(map.containsKey(coord)){
                     if(voisin==2 || voisin==3){
 			mapNext.put(coord, new Cellule(coord, true));
                     }
@@ -98,7 +101,7 @@ public class Grille {
         }
 
 	public boolean estVivante (int x, int y) {
-		return (map.containsKey(new Coordonnee(x, y)));
+		return (map.get(new Coordonnee(x, y)) != null);
 	}
 
 	public int getX () {
