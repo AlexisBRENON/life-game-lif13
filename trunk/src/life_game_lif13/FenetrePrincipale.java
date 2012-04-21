@@ -35,7 +35,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	private JPanel _panelGrille;
 	private JButton _boutonLancer;
 	private JToggleButton _boutonPause;
-	private JButton _boutonEffacer;
+	private JButton _boutonInit;
 	private JPanel[][] _cellules;
 	/* Fin des composants */
 
@@ -111,10 +111,10 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		JPanel panelBoutons = new JPanel(new GridLayout(3, 0, 5, 5));
 		_boutonLancer = new JButton("Lancer !");
 		_boutonPause = new JToggleButton("Pause");
-		_boutonEffacer = new JButton("Effacer");
+		_boutonInit = new JButton("Initialiser");
+		panelBoutons.add(_boutonInit);
 		panelBoutons.add(_boutonLancer);
 		panelBoutons.add(_boutonPause);
-		panelBoutons.add(_boutonEffacer);
 		panelPrincipal.add(panelBoutons, BorderLayout.EAST);
 
 		/* Connection des signaux */
@@ -150,12 +150,12 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 			}
 		});
 
-		_boutonEffacer.addActionListener(
+		_boutonInit.addActionListener(
 				new ActionListener() {
 
 			@Override
 			public void actionPerformed (ActionEvent e) {
-				onClearAction();
+				onInitAction();
 			}
 		});
 	}
@@ -171,10 +171,8 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		for (int i = 0; i < _nbLigne; i++) {
 			for (int j = 0; j < _nbCol; j++) {
 				if (_m.estVivante(j,i)) {
-					//System.out.println(j+","+i+" vivante");
 					_cellules[i][j].setBackground(Color.red);
 				} else {
-					//System.out.println(j+","+i+" morte");
 					_cellules[i][j].setBackground(Color.white);
 				}
 			}
@@ -195,14 +193,12 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		_boutonPause.setSelected((_boutonPause.isSelected()));
 	}
 
-	private void onClearAction() {
-		for (int i = 0; i < _nbLigne; i++) {
-			for (int j = 0; j < _nbCol; j++) {
-				_panelGrille.getComponent((i+1)*j).
-						setBackground(Color.white);
-			}
-		}
+	private void onInitAction() {
 		_m.clear();
+		_m.switchPause();
+		_m.getGrille().initGrille();
+		_m.switchPause();
+		update(_m, null);
 	}
 
 	public void onMouseEnteredOnCell(MouseEvent e) {

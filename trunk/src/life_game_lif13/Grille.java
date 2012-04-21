@@ -51,7 +51,6 @@ public class Grille {
         int i, j;
         int voisin = 0;
 		mapNext.clear();
-        System.out.println("etat--------------------------");
         for(j = 0; j < y; j++){
             for(i = 0; i < x; i++){
 

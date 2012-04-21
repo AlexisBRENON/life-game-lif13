@@ -27,7 +27,16 @@ public class ThreadSimu extends Thread {
 	public void run () {
 		while (true) {
 			if (etatExec) {
-				(new Thread(modele)).start();
+				Thread t = new Thread(modele);
+				t.start();
+				try {
+					t.join();
+				} catch (InterruptedException ex) {
+					Logger.getLogger(ThreadSimu.class.getName()).
+							log(Level.SEVERE,
+								null,
+								ex);
+				}
 			}
 			try {
 				Thread.sleep(((long) tempsPause*1000));
@@ -55,5 +64,5 @@ public class ThreadSimu extends Thread {
 	public void setTempsPause (float tempsPause) {
 		this.tempsPause = tempsPause;
 	}
-	
+
 }
