@@ -105,15 +105,25 @@ public class Grille {
         }
 
 	public boolean estVivante (int x, int y) {
-		return (map.get(new Coordonnee(x, y)) != null);
+		return (map.containsKey(new Coordonnee(x, y)));
 	}
 
         public void addCellule(Coordonnee coord){
             map.put(coord, new Cellule(coord, true));
+            mapNext.clear();
+            mapNext.putAll(map);
+       //     mapNext.put(coord, new Cellule(coord, true));
         }
         
         public void removeCellule(Coordonnee coord){
-        Cellule remove = map.remove(coord);
+            System.out.println("coord "+coord.toString());
+            Cellule remove = map.remove(coord);
+            // mapNext.remove(coord);
+            System.out.println("cellule: "+remove.toString());
+            mapNext.clear();
+            mapNext.putAll(map);
+            map.clear();
+            map.putAll(mapNext);
         }
         
 	public int getX () {

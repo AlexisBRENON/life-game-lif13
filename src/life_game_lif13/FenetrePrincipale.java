@@ -68,10 +68,12 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 		JPanel panelPrincipal = new JPanel(new BorderLayout());
 		this.setContentPane(panelPrincipal);
+                
 
 		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
 		for (int i = 0; i < _nbLigne; i++) {
 			for (int j = 0; j < _nbCol; j++) {
+                                final int x=i, y=j;
 				_cellules[i][j] = new JPanel();
 				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 				_cellules[i][j].setBackground(Color.white);
@@ -79,7 +81,8 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 					@Override
 					public void mouseClicked (MouseEvent e) {
-                                            onMouseClickedOnCell(e);
+                                            //System.out.println(x+" "+y);
+                                            onMouseClickedOnCell(e, x, y);
 
 					}
 
@@ -183,6 +186,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	}
 
 	private void onLaunchAction() {
+                update(_m, null);
 		_m.lancerThread();
 		_boutonLancer.setEnabled(false);
 	}
@@ -206,27 +210,26 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		}
 	}
         
-        public void onMouseClickedOnCell(MouseEvent e){
-            if(e.getComponent()instanceof JPanel){
-                System.out.println(e.paramString()+" "+e.getY());
-               /* if(_m.grille.estVivante(e.getX(), e.getY())){
-                   _cellules[e.getX()][e.getY()].setBackground(Color.white);
-                   _m.grille.removeCellule(new Coordonnee(e.getX(), e.getY()));
+        public void onMouseClickedOnCell(MouseEvent e,int x,int y){
+           
+                if(_m.grille.estVivante(x, y)){
+                    _m.grille.removeCellule(new Coordonnee(y, x));
+                    //update(_m, null);
                 }
                 else{
-                    //_cellules[e.getX()][e.getY()].setBackground(Color.red);
-                    _m.grille.addCellule(new Coordonnee(e.getX(), e.getY()));
-                    ((JPanel)e.getComponent()).setBackground(Color.red);
-                }*/
+                    _m.grille.addCellule(new Coordonnee(y,x));
+                    //update(_m, null);
+                
+                
             }
             
         }
 
 	public void onMouseExitedCell (MouseEvent e) {
-            System.out.println(_m.grille.estVivante(e.getY(), e.getX()));
-		if (e.getComponent() instanceof JPanel) {
+            //System.out.println(_m.grille.estVivante(e.getY(), e.getX()));
+            update(_m, null);
+            /*if (e.getComponent() instanceof JPanel) 
                         ((JPanel)e.getComponent()).setBackground(Color.white);
-                        
-		}
+                  */      
 	}
 }
