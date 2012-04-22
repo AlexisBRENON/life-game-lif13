@@ -4,7 +4,12 @@
  */
 package life_game_lif13;
 
+import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.Random;
 
 /**
@@ -103,6 +108,14 @@ public class Grille {
 		return (map.get(new Coordonnee(x, y)) != null);
 	}
 
+        public void addCellule(Coordonnee coord){
+            map.put(coord, new Cellule(coord, true));
+        }
+        
+        public void removeCellule(Coordonnee coord){
+        Cellule remove = map.remove(coord);
+        }
+        
 	public int getX () {
 		return x;
 	}
@@ -110,7 +123,52 @@ public class Grille {
 	public int getY () {
 		return y;
 	}
-
+        
+        public void save(String file) throws IOException{
+            int i, j;
+            Properties p = new Properties();
+            OutputStream out = new FileOutputStream(file);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            p.clear();
+            p.store(out, "save "+ dateFormat.format(date));
+            for(j = 0; j < y; j++){
+                for(i = 0; i < x; i++){
+                    Coordonnee coord= new Coordonnee(i,j);
+                    if(map.containsKey(coord))
+                        p.setProperty(coord.toString(),"true");
+                }
+            }
+            
+        p.store(out, null);
+        //load(file);
+        }
+        
+        public HashMap <Coordonnee, Cellule> load(String file) throws FileNotFoundException, IOException{
+            int i, j;
+            
+            HashMap<Coordonnee, Cellule> loadMap=new HashMap<Coordonnee, Cellule>();
+            Properties p = new Properties();
+            InputStream out = new FileInputStream(file);
+            String property;
+            Boolean ok;
+            p.load(out);
+            Coordonnee coord;
+            for(j = 0; j < y; j++){
+                for(i = 0; i < x; i++){
+                    coord=new Coordonnee(i, j);
+                    property= p.getProperty(coord.toString());
+                    ok= Boolean.valueOf(property).booleanValue();
+                    //System.out.println("x: "+ i+ " y: "+j+" "+ok+property);
+                    if(ok){
+                        loadMap.put(coord, new Cellule(coord, true));
+                        System.out.println("ok x: "+ i+ " y: "+j);
+                    }
+                    //p.storeToXML(out, coord.toString());
+                }
+            }
+            return loadMap;
+        }
 
 
 }

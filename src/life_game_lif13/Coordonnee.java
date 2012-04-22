@@ -62,7 +62,7 @@ public class Coordonnee {
 
     @Override
     public String toString() {
-        return "Coordonnee{" + "_x=" + _x + ", _y=" + _y + '}';
+        return "_x=" + _x + ", _y=" + _y+"\n";
     }
 
 	@Override

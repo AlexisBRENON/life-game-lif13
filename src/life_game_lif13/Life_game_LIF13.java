@@ -4,6 +4,11 @@
  */
 package life_game_lif13;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author t0rp
@@ -13,10 +18,13 @@ public class Life_game_LIF13 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Modele m = new Modele(20,20);
 		FenetrePrincipale f = new FenetrePrincipale(m);
 
 		new Thread(f).start();
+                
+                  // m.grille.save();
+                 //  m.grille.load();
     }
 }
