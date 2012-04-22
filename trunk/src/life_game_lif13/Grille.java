@@ -119,7 +119,7 @@ public class Grille {
             System.out.println("coord "+coord.toString());
             Cellule remove = map.remove(coord);
             // mapNext.remove(coord);
-            System.out.println("cellule: "+remove.toString());
+            //System.out.println("cellule: "+remove.toString());
             mapNext.clear();
             mapNext.putAll(map);
             //map.clear();
