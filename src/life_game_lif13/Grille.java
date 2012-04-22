@@ -109,17 +109,22 @@ public class Grille {
 	}
 
         public void addCellule(Coordonnee coord){
+            System.out.println("-------------------------");
+            System.out.println("mapp add "+ map.toString());
             map.put(coord, new Cellule(coord, true));
             mapNext.clear();
             mapNext.putAll(map);
+            System.out.println("mapp add "+ map.toString());
        //     mapNext.put(coord, new Cellule(coord, true));
         }
         
         public void removeCellule(Coordonnee coord){
-            System.out.println("coord "+coord.toString());
+            
+            //System.out.println("coord remove"+coord.toString());
             Cellule remove = map.remove(coord);
             // mapNext.remove(coord);
             //System.out.println("cellule: "+remove.toString());
+            System.out.println("mapp del "+ map.toString());
             mapNext.clear();
             mapNext.putAll(map);
             //map.clear();

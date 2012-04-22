@@ -4,6 +4,7 @@
  */
 package life_game_lif13;
 
+import com.sun.tools.internal.ws.processor.model.Model;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,6 +47,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		_cellules = new JPanel[_nbLigne][_nbCol];
 		build();
 	}
+
 
 	private void build() {
 		/* Création de l'interface */
@@ -226,13 +228,9 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
            
                 if(_m.grille.estVivante(x, y)){
                     _m.grille.removeCellule(new Coordonnee(y, x));
-                    //update(_m, null);
                 }
                 else{
                     _m.grille.addCellule(new Coordonnee(y,x));
-                    //update(_m, null);
-                
-                
             }
             
         }
