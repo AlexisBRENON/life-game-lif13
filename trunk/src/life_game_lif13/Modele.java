@@ -4,7 +4,14 @@
  */
 package life_game_lif13;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Observable;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,12 +41,16 @@ public class Modele extends Observable implements Runnable {
 
     @Override
     public void run() {
-		calcul();
+        try {
+            calcul();
+        } catch (IOException ex) {
+            Logger.getLogger(Modele.class.getName()).log(Level.SEVERE, null, ex);
+        }
 		setChanged();
 		notifyObservers();
     }
 
-    public void calcul(){
+    public void calcul() throws IOException{
         grille.etatSuivant();
     }
 
@@ -54,4 +65,6 @@ public class Modele extends Observable implements Runnable {
 	public void clear () {
 		grille.clearGrille();
 	}
+        
+       
 }

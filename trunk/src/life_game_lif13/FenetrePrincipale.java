@@ -12,8 +12,6 @@ import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 
 
 /**
@@ -81,6 +79,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 					@Override
 					public void mouseClicked (MouseEvent e) {
+                                            onMouseClickedOnCell(e);
 
 					}
 
@@ -206,10 +205,28 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 			((JPanel)e.getComponent()).setBackground(Color.gray);
 		}
 	}
+        
+        public void onMouseClickedOnCell(MouseEvent e){
+            if(e.getComponent()instanceof JPanel){
+                System.out.println(e.paramString()+" "+e.getY());
+               /* if(_m.grille.estVivante(e.getX(), e.getY())){
+                   _cellules[e.getX()][e.getY()].setBackground(Color.white);
+                   _m.grille.removeCellule(new Coordonnee(e.getX(), e.getY()));
+                }
+                else{
+                    //_cellules[e.getX()][e.getY()].setBackground(Color.red);
+                    _m.grille.addCellule(new Coordonnee(e.getX(), e.getY()));
+                    ((JPanel)e.getComponent()).setBackground(Color.red);
+                }*/
+            }
+            
+        }
 
 	public void onMouseExitedCell (MouseEvent e) {
+            System.out.println(_m.grille.estVivante(e.getY(), e.getX()));
 		if (e.getComponent() instanceof JPanel) {
-			((JPanel)e.getComponent()).setBackground(Color.white);
+                        ((JPanel)e.getComponent()).setBackground(Color.white);
+                        
 		}
 	}
 }
