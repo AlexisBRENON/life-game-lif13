@@ -24,6 +24,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	private int _nbCol;
 	private int _nbLigne;
 	private Modele _m;
+        private Boolean launch = false;
 
 	/* Composants de la fenêtre */
 	private JMenuItem _itemEnregistrer;
@@ -170,6 +171,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	@Override
 	public void update (Observable o,
 						Object arg) {
+            if(launch==true){
 		for (int i = 0; i < _nbLigne; i++) {
 			for (int j = 0; j < _nbCol; j++) {
 				if (_m.estVivante(j,i)) {
@@ -179,13 +181,21 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 				}
 			}
 		}
-	}
+            }
+            else{
+                for (int i = 0; i < _nbLigne; i++) {
+			for (int j = 0; j < _nbCol; j++)
+                            _cellules[i][j].setBackground(Color.white);
+			}
+                }
+        }
 
 	private void onQuitAction () {
 		System.exit(0);
 	}
 
 	private void onLaunchAction() {
+                launch=true;
                 update(_m, null);
 		_m.lancerThread();
 		_boutonLancer.setEnabled(false);
@@ -226,10 +236,6 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
         }
 
 	public void onMouseExitedCell (MouseEvent e) {
-            //System.out.println(_m.grille.estVivante(e.getY(), e.getX()));
-            update(_m, null);
-            /*if (e.getComponent() instanceof JPanel) 
-                        ((JPanel)e.getComponent()).setBackground(Color.white);
-                  */      
+            update(_m, null);     
 	}
 }

@@ -122,7 +122,7 @@ public class Grille {
             System.out.println("cellule: "+remove.toString());
             mapNext.clear();
             mapNext.putAll(map);
-            map.clear();
+            //map.clear();
             map.putAll(mapNext);
         }
         
