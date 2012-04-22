@@ -44,9 +44,9 @@ public class Cellule {
 
     @Override
     public String toString() {
-        //return "";
-        return "Cellule{" + coord.toString() + ", etatCourant=" + etatCourant
-                + ", etatSuivant=" + etatSuivant + "} \n";
+        return "";
+        //return "Cellule{" + coord.toString() + ", etatCourant=" + etatCourant
+                //+ ", etatSuivant=" + etatSuivant + "} \n";
     }
 
 	@Override
