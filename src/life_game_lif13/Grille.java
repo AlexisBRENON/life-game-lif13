@@ -179,6 +179,28 @@ public class Grille {
             }
             return loadMap;
         }
+        
+        public void addMotifAleatoire(Coordonnee coord){
+            int size;
+            int i, j;
+            size = 3;
+            Motif motif= new Motif(size, size);
+            motif.InitMotif();
+            //motif.getMap().entrySet().size();
+            
+            for (Coordonnee mapKey : motif.getMap().keySet()) {
+                //System.out.println(mapKey.toString());
+                Coordonnee coordGrille = new Coordonnee(mapKey.getX()+coord.getX(),
+                        mapKey.getY()+coord.getY()); 
+                if(!estVivante(coordGrille)){
+                    addCellule(coordGrille);
+                }
+                
+                //addCellule(new Coordonnee(mapKey.getX()+coord.getX(),mapKey.getY()+coord.getY())); 
+            // utilise ici hashMap.get(mapKey) pour accéder aux valeurs
+            }
+            
+        }
 
 
 }

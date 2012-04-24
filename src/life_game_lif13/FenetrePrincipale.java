@@ -219,7 +219,8 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
                     _m.grille.removeCellule(new Coordonnee(x, y));
                 }
                 else{
-                    _m.grille.addCellule(new Coordonnee(x,y));
+                    //_m.grille.addCellule(new Coordonnee(x,y));
+                    _m.grille.addMotifAleatoire(new Coordonnee(x, y));
 				}
         }
 
