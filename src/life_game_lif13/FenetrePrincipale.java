@@ -40,7 +40,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 	public FenetrePrincipale (Modele m) {
 		_m = m;
-                launch=false;
+        launch=false;
 		_nbCol = m.getGrille().getX();
 		_nbLigne = m.getGrille().getY();
 		_cellules = new JPanel[_nbCol][_nbLigne];
@@ -74,12 +74,13 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 
 		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
-		for (int i = 0; i < _nbCol; i++) {
-			for (int j = 0; j < _nbLigne; j++) {
+		for (int j = 0; j < _nbLigne; j++) {
+			for (int i = 0; i < _nbCol; i++) {
                                 final int x=i, y=j;
 				_cellules[i][j] = new JPanel();
 				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 				_cellules[i][j].setBackground(Color.white);
+				if (i > 0){_cellules[i][j].setBackground(Color.green);}
 				_cellules[i][j].addMouseListener(new MouseListener() {
 
 					@Override
@@ -207,6 +208,9 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	public void onMouseEnteredOnCell(MouseEvent e) {
 		Object o = e.getComponent();
 		if (o instanceof JPanel) {
+			if (e.getButton() != MouseEvent.NOBUTTON) {
+				System.out.println("Bouton pressé !");
+			}
 			((JPanel)o).setBackground(((JPanel)o).getBackground().darker());
 		}
 	}
