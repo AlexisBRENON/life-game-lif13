@@ -80,7 +80,6 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 				_cellules[i][j] = new JPanel();
 				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 				_cellules[i][j].setBackground(Color.white);
-				if (i > 0){_cellules[i][j].setBackground(Color.green);}
 				_cellules[i][j].addMouseListener(new MouseListener() {
 
 					@Override
