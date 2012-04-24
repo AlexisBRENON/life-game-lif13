@@ -76,7 +76,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
 		for (int i = 0; i < _nbCol; i++) {
 			for (int j = 0; j < _nbLigne; j++) {
-                final int x=i, y=j;
+                                final int x=i, y=j;
 				_cellules[i][j] = new JPanel();
 				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 				_cellules[i][j].setBackground(Color.white);
@@ -212,7 +212,6 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	}
 
         public void onMouseClickedOnCell(MouseEvent e,int x,int y){
-
                 if(_m.grille.estVivante(x, y)){
                     _m.grille.removeCellule(new Coordonnee(x, y));
                 }
