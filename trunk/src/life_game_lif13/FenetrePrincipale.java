@@ -4,10 +4,7 @@
  */
 package life_game_lif13;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -210,7 +207,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 			if (e.getButton() != MouseEvent.NOBUTTON) {
 				System.out.println("Bouton pressé !");
 			}
-			((JPanel)o).setBackground(((JPanel)o).getBackground().darker());
+                ((JPanel)o).setBackground(((JPanel)o).getBackground().darker());
 		}
 	}
 
