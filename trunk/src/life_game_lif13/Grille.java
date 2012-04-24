@@ -180,26 +180,44 @@ public class Grille {
             return loadMap;
         }
         
-        public void addMotifAleatoire(Coordonnee coord){
-            int size;
+        public void addMotifAleatoire(Coordonnee coord, int size){
             int i, j;
-            size = 3;
             Motif motif= new Motif(size, size);
             motif.InitMotif();
             //motif.getMap().entrySet().size();
-            
-            for (Coordonnee mapKey : motif.getMap().keySet()) {
-                //System.out.println(mapKey.toString());
-                Coordonnee coordGrille = new Coordonnee(mapKey.getX()+coord.getX(),
-                        mapKey.getY()+coord.getY()); 
-                if(!estVivante(coordGrille)){
-                    addCellule(coordGrille);
+            for(i=0; i<size;i++){
+                for(j=0;j<size;j++){
+                    Coordonnee coordGrille = new Coordonnee(i+coord.getX(),
+                        j+coord.getY()); 
+                    if(motif.estVivante(new Coordonnee(i, j))){
+                        this.addCellule(coordGrille);
+                    }
+                    else{
+                        this.removeCellule(coordGrille);
+                    }
                 }
-                
-                //addCellule(new Coordonnee(mapKey.getX()+coord.getX(),mapKey.getY()+coord.getY())); 
-            // utilise ici hashMap.get(mapKey) pour accéder aux valeurs
             }
+        }
+        
+        public void addMotif(Coordonnee coord, int size, HashMap<Coordonnee, 
+                Cellule> mapMotif){
             
+            int i, j;
+            Motif motif= new Motif(size, size);
+            motif.InitMotif(mapMotif);
+            //motif.getMap().entrySet().size();
+            for(i=0; i<size;i++){
+                for(j=0;j<size;j++){
+                    Coordonnee coordGrille = new Coordonnee(i+coord.getX(),
+                        j+coord.getY()); 
+                    if(motif.estVivante(new Coordonnee(i, j))){
+                        this.addCellule(coordGrille);
+                    }
+                    else{
+                        this.removeCellule(coordGrille);
+                    }
+                }
+            }
         }
 
 
