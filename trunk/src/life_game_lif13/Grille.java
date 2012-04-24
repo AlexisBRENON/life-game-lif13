@@ -116,7 +116,6 @@ public class Grille {
         
         public void removeCellule(Coordonnee coord){
             Cellule remove = map.remove(coord);
-            System.out.println("mapp del "+ map.toString());
             mapNext.clear();
             mapNext.putAll(map);
             }

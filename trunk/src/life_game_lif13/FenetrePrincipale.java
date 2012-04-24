@@ -225,13 +225,14 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	}
         
         public void onMouseClickedOnCell(MouseEvent e,int x,int y){
-           
-                if(_m.grille.estVivante(x, y)){
+           //System.out.println("coord "+y+" "+x+" "+_m.grille.estVivante(x, y));
+                if(_m.grille.estVivante(y, x)){
                     _m.grille.removeCellule(new Coordonnee(y, x));
                 }
                 else{
                     _m.grille.addCellule(new Coordonnee(y,x));
             }
+                
             
         }
 
