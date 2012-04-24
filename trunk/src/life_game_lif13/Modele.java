@@ -4,12 +4,8 @@
  */
 package life_game_lif13;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Observable;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +23,6 @@ public class Modele extends Observable implements Runnable {
 
 	public Modele(int x, int y){
 		grille = new Grille(x,y);
-		grille.initGrille();
 		t = new ThreadSimu(1f, this);
 	}
 
@@ -58,6 +53,13 @@ public class Modele extends Observable implements Runnable {
 		return grille.estVivante(x,y);
 	}
 
+	public boolean estVivante(Coordonnee c) {
+		return grille.estVivante(c);
+	}
+
+	public void setPaused (boolean b) {
+		t.setEtatExec(!b);
+	}
 	public void switchPause () {
 		t.setEtatExec(!t.isEtatExec());
 	}
@@ -65,6 +67,14 @@ public class Modele extends Observable implements Runnable {
 	public void clear () {
 		grille.clearGrille();
 	}
-        
-       
+
+	public void addCellule (Coordonnee c) {
+		grille.addCellule(c);
+	}
+
+	public void removeCellule (Coordonnee c) {
+		grille.removeCellule(c);
+	}
+
+
 }

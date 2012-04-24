@@ -108,18 +108,22 @@ public class Grille {
 		return (map.containsKey(new Coordonnee(x, y)));
 	}
 
+	public boolean estVivante (Coordonnee c) {
+		return (map.containsKey(c));
+	}
+
         public void addCellule(Coordonnee coord){
             map.put(coord, new Cellule(coord, true));
             mapNext.clear();
             mapNext.putAll(map);
         }
-        
+
         public void removeCellule(Coordonnee coord){
             Cellule remove = map.remove(coord);
             mapNext.clear();
             mapNext.putAll(map);
             }
-        
+
 	public int getX () {
 		return x;
 	}
@@ -127,7 +131,7 @@ public class Grille {
 	public int getY () {
 		return y;
 	}
-        
+
         public void save(String file) throws IOException{
             int i, j;
             Properties p = new Properties();
@@ -143,14 +147,14 @@ public class Grille {
                         p.setProperty(coord.toString(),"true");
                 }
             }
-            
+
         p.store(out, null);
         //load(file);
         }
-        
+
         public HashMap <Coordonnee, Cellule> load(String file) throws FileNotFoundException, IOException{
             int i, j;
-            
+
             HashMap<Coordonnee, Cellule> loadMap=new HashMap<Coordonnee, Cellule>();
             Properties p = new Properties();
             InputStream out = new FileInputStream(file);
