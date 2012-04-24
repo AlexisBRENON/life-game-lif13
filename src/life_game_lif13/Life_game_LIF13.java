@@ -5,9 +5,6 @@
 package life_game_lif13;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
@@ -19,7 +16,7 @@ public class Life_game_LIF13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        Modele m = new Modele(5,5);
+                Modele m = new Modele(5,5);
 		FenetrePrincipale f = new FenetrePrincipale(m);
 
 		new Thread(f).start();

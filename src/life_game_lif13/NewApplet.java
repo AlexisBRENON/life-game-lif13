@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 public class NewApplet extends JApplet {
 	private static final long serialVersionUID = 1L;
 
-private JLabel label = new JLabel();
+        private JLabel label = new JLabel();
 	private JButton bouton = new JButton("Cliquez");
 	private int count = 0;
 	/**
