@@ -65,31 +65,30 @@ public class Grille {
                 if(map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j - 1 + y)%y))))
                     voisin++;
 
-				if(map.containsKey(new Coordonnee(((i) % x), ((j - 1 + y)%y))))
+                if(map.containsKey(new Coordonnee(((i) % x), ((j - 1 + y)%y))))
                     voisin++;
 
-				if(map.containsKey(new Coordonnee(((i + 1) % x), ((j - 1 + y)%y))))
+		if(map.containsKey(new Coordonnee(((i + 1) % x), ((j - 1 + y)%y))))
                     voisin++;
 
                 if(map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j)%y))))
                     voisin++;
 
-				if(map.containsKey(new Coordonnee(((i + 1) % x), ((j)%y))))
+		if(map.containsKey(new Coordonnee(((i + 1) % x), ((j)%y))))
                     voisin++;
 
-				if(map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j + 1)%y))))
+		if(map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j + 1)%y))))
                     voisin++;
 
-				if(map.containsKey(new Coordonnee(((i) % x), ((j + 1)%y))))
+		if(map.containsKey(new Coordonnee(((i) % x), ((j + 1)%y))))
                     voisin++;
 
-				if(map.containsKey(new Coordonnee(((i + 1) % x), ((j + 1)%y))))
+		if(map.containsKey(new Coordonnee(((i + 1) % x), ((j + 1)%y))))
                     voisin++;
-
-				//System.out.println("("+ i+","+j+") -> "+voisin+"voisins");
+        
                 //action si voisin
                 Coordonnee coord=new Coordonnee(i, j);
-				//if(map.containsKey(coord)) {System.out.println(coord.toString()+"\n");}
+                
                 if(map.containsKey(coord)){
                     if(voisin==2 || voisin==3){
 			mapNext.put(coord, new Cellule(coord, true));
@@ -181,35 +180,24 @@ public class Grille {
         }
         
         public void addMotifAleatoire(Coordonnee coord, int size){
-            int i, j;
             Motif motif= new Motif(size, size);
             motif.InitMotif();
-            //motif.getMap().entrySet().size();
-            for(i=0; i<size;i++){
-                for(j=0;j<size;j++){
-                    Coordonnee coordGrille = new Coordonnee(i+coord.getX(),
-                        j+coord.getY()); 
-                    if(motif.estVivante(new Coordonnee(i, j))){
-                        this.addCellule(coordGrille);
-                    }
-                    else{
-                        this.removeCellule(coordGrille);
-                    }
-                }
-            }
+            this.ajoutMotif(motif, coord);
         }
         
         public void addMotif(Coordonnee coord, int size, HashMap<Coordonnee, 
                 Cellule> mapMotif){
-            
-            int i, j;
             Motif motif= new Motif(size, size);
             motif.InitMotif(mapMotif);
-            //motif.getMap().entrySet().size();
-            for(i=0; i<size;i++){
-                for(j=0;j<size;j++){
-                    Coordonnee coordGrille = new Coordonnee(i+coord.getX(),
-                        j+coord.getY()); 
+            this.ajoutMotif(motif, coord);
+        }
+        
+        private void ajoutMotif(Motif motif, Coordonnee coord){
+            int i, j;
+            for(i=0; i<motif.getX();i++){
+                for(j=0;j<motif.getY();j++){
+                    Coordonnee coordGrille = new Coordonnee((i+coord.getX())%this.x,
+                        (j+coord.getY())%this.y); 
                     if(motif.estVivante(new Coordonnee(i, j))){
                         this.addCellule(coordGrille);
                     }
@@ -218,6 +206,7 @@ public class Grille {
                     }
                 }
             }
+        
         }
 
 
