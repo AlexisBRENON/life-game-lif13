@@ -4,7 +4,6 @@
  */
 package life_game_lif13;
 
-import com.sun.tools.internal.ws.processor.model.Model;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -44,7 +43,7 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
                 launch=false;
 		_nbCol = m.getGrille().getX();
 		_nbLigne = m.getGrille().getY();
-		_cellules = new JPanel[_nbLigne][_nbCol];
+		_cellules = new JPanel[_nbCol][_nbLigne];
 		build();
 	}
 
@@ -72,12 +71,12 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 		JPanel panelPrincipal = new JPanel(new BorderLayout());
 		this.setContentPane(panelPrincipal);
-                
+
 
 		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
-		for (int i = 0; i < _nbLigne; i++) {
-			for (int j = 0; j < _nbCol; j++) {
-                                final int x=i, y=j;
+		for (int i = 0; i < _nbCol; i++) {
+			for (int j = 0; j < _nbLigne; j++) {
+                final int x=i, y=j;
 				_cellules[i][j] = new JPanel();
 				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 				_cellules[i][j].setBackground(Color.white);
@@ -85,14 +84,12 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 
 					@Override
 					public void mouseClicked (MouseEvent e) {
-                                            //System.out.println(x+" "+y);
-                                            onMouseClickedOnCell(e, x, y);
-
+						//System.out.println(x+" "+y);
+						onMouseClickedOnCell(e, x, y);
 					}
 
 					@Override
 					public void mousePressed (MouseEvent e) {
-
 					}
 
 					@Override
@@ -174,32 +171,22 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	@Override
 	public void update (Observable o,
 						Object arg) {
-            if(launch==true){
-		for (int i = 0; i < _nbLigne; i++) {
-			for (int j = 0; j < _nbCol; j++) {
-				if (_m.estVivante(j,i)) {
+		for (int i = 0; i < _nbCol; i++) {
+			for (int j = 0; j < _nbLigne; j++) {
+				if (_m.estVivante(i,j)) {
 					_cellules[i][j].setBackground(Color.red);
 				} else {
 					_cellules[i][j].setBackground(Color.white);
 				}
 			}
 		}
-            }
-            else{
-                for (int i = 0; i < _nbLigne; i++) {
-			for (int j = 0; j < _nbCol; j++)
-                            _cellules[i][j].setBackground(Color.white);
-			}
-                }
-        }
+	}
 
 	private void onQuitAction () {
 		System.exit(0);
 	}
 
 	private void onLaunchAction() {
-                launch=true;
-                update(_m, null);
 		_m.lancerThread();
 		_boutonLancer.setEnabled(false);
 	}
@@ -210,33 +197,33 @@ public class FenetrePrincipale extends JFrame implements Observer, Runnable {
 	}
 
 	private void onInitAction() {
-                launch=true;
 		_m.clear();
-		_m.switchPause();
+		_m.setPaused(true);
 		_m.getGrille().initGrille();
+		this.update(_m, null);
 		_m.switchPause();
-		update(_m, null);
 	}
 
 	public void onMouseEnteredOnCell(MouseEvent e) {
-		if (e.getComponent() instanceof JPanel) {
-			((JPanel)e.getComponent()).setBackground(Color.gray);
+		Object o = e.getComponent();
+		if (o instanceof JPanel) {
+			((JPanel)o).setBackground(((JPanel)o).getBackground().darker());
 		}
 	}
-        
+
         public void onMouseClickedOnCell(MouseEvent e,int x,int y){
-           //System.out.println("coord "+y+" "+x+" "+_m.grille.estVivante(x, y));
-                if(_m.grille.estVivante(y, x)){
-                    _m.grille.removeCellule(new Coordonnee(y, x));
+
+				System.out.println("("+x+", "+y+")");
+                if(_m.grille.estVivante(x, y)){
+                    _m.grille.removeCellule(new Coordonnee(x, y));
                 }
                 else{
-                    _m.grille.addCellule(new Coordonnee(y,x));
-            }
-                
-            
+                    _m.grille.addCellule(new Coordonnee(x,y));
+				}
+				this.update(_m, null);
         }
 
 	public void onMouseExitedCell (MouseEvent e) {
-            update(_m, null);     
+            update(_m, null);
 	}
 }
