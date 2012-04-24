@@ -44,6 +44,8 @@ public class Grille {
 		} while (counter < (10f/100f)*(x*y));
         this.mapNext.clear();
     }
+        
+       
 
     public void clearGrille(){
         this.map.clear();
