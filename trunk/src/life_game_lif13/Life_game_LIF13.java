@@ -20,7 +20,7 @@ public class Life_game_LIF13 {
 		FenetrePrincipale f = new FenetrePrincipale(m);
 
 		new Thread(f).start();
-                
+
                   // m.grille.save();
                  //  m.grille.load();
     }
