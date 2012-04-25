@@ -14,8 +14,9 @@ import java.util.logging.Logger;
  * @author t0rp
  */
 public class Modele extends Observable implements Runnable {
-    Grille grille;
-	ThreadSimu t;
+    private Grille grille;
+	private ThreadSimu t;
+	private Motif pattern;
 
     public Modele(){
 		this(10,10);
@@ -75,6 +76,4 @@ public class Modele extends Observable implements Runnable {
 	public void removeCellule (Coordonnee c) {
 		grille.removeCellule(c);
 	}
-
-
 }

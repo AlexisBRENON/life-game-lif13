@@ -44,8 +44,8 @@ public class Grille {
 		} while (counter < (10f/100f)*(x*y));
         this.mapNext.clear();
     }
-        
-       
+
+
 
     public void clearGrille(){
         this.map.clear();
@@ -85,10 +85,10 @@ public class Grille {
 
 		if(map.containsKey(new Coordonnee(((i + 1) % x), ((j + 1)%y))))
                     voisin++;
-        
+
                 //action si voisin
                 Coordonnee coord=new Coordonnee(i, j);
-                
+
                 if(map.containsKey(coord)){
                     if(voisin==2 || voisin==3){
 			mapNext.put(coord, new Cellule(coord, true));
@@ -114,16 +114,14 @@ public class Grille {
 	}
 
         public void addCellule(Coordonnee coord){
-            map.put(coord, new Cellule(coord, true));
-            mapNext.clear();
-            mapNext.putAll(map);
+			if (!map.containsKey(coord)) {
+				map.put(coord, new Cellule(coord, true));
+			}
         }
 
         public void removeCellule(Coordonnee coord){
-            Cellule remove = map.remove(coord);
-            mapNext.clear();
-            mapNext.putAll(map);
-            }
+            map.remove(coord);
+        }
 
 	public int getX () {
 		return x;
@@ -178,35 +176,33 @@ public class Grille {
             }
             return loadMap;
         }
-        
+
         public void addMotifAleatoire(Coordonnee coord, int size){
             Motif motif= new Motif(size, size);
             motif.InitMotif();
             this.ajoutMotif(motif, coord);
         }
-        
-        public void addMotif(Coordonnee coord, int size, HashMap<Coordonnee, 
+
+        public void addMotif(Coordonnee coord, int size, HashMap<Coordonnee,
                 Cellule> mapMotif){
             Motif motif= new Motif(size, size);
             motif.InitMotif(mapMotif);
             this.ajoutMotif(motif, coord);
         }
-        
+
         private void ajoutMotif(Motif motif, Coordonnee coord){
             int i, j;
             for(i=0; i<motif.getX();i++){
                 for(j=0;j<motif.getY();j++){
-                    Coordonnee coordGrille = new Coordonnee((i+coord.getX())%this.x,
-                        (j+coord.getY())%this.y); 
+                    Coordonnee coordGrille = new Coordonnee(
+							(i+coord.getX()-motif.getX()/2)%this.x,
+							(j+coord.getY()-motif.getY()/2)%this.y);
                     if(motif.estVivante(new Coordonnee(i, j))){
                         this.addCellule(coordGrille);
                     }
-                    else{
-                        this.removeCellule(coordGrille);
-                    }
                 }
             }
-        
+
         }
 
 
