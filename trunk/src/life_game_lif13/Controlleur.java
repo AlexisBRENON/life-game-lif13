@@ -221,10 +221,16 @@ public class Controlleur {
 		if (o instanceof String) {
 			if (m.getGrille().estVivante(x, y) && ((String)o).equalsIgnoreCase("Point")) {
 				m.getGrille().removeCellule(new Coordonnee(x, y));
+			} else {
+				m.addMotif(new Coordonnee(x, y));
+			}
+			win.update(m, null);
+			if (((String)o).equalsIgnoreCase("Aléatoire")) {
+				Motif motif = new Motif(3, 3);
+				motif.InitMotif();
+				m.setPattern(motif);
 			}
 		}
-		m.addMotif(new Coordonnee(x, y));
-		win.update(m, null);
 	}
 
 	public void onMouseExitedCell (MouseEvent e, int x, int y) {
@@ -323,6 +329,10 @@ public class Controlleur {
 										 new Cellule(new Coordonnee(1,0), true));
 					pattern.getMap().put(new Coordonnee(1,1),
 										 new Cellule(new Coordonnee(1,1), true));
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("Aléatoire")) {
+					Motif pattern = new Motif(3,3);
+					pattern.InitMotif();
 					m.setPattern(pattern);
 				}
 			}

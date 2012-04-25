@@ -116,7 +116,8 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		String[] shapeList = {"Point",
 							  "Carré",
 							  "Trait Vertical",
-							  "Trait Horizontal"};
+							  "Trait Horizontal",
+							  "Aléatoire"};
 		_shapesBox = new JComboBox(shapeList);
 		optionPanel.add(_compteur);
 		optionPanel.add(_clearButton);
