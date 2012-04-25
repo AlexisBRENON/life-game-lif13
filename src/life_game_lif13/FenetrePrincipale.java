@@ -20,7 +20,6 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private int _nbCol;
 	private int _nbLigne;
 	private Modele _m;
-        private Boolean launch;
 
 	/* Composants de la fenêtre */
 	private JMenuItem _itemEnregistrer;
@@ -30,15 +29,14 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private JPanel _panelGrille;
 	private JComboBox _shapesBox;
 	private JPanel[][] _cellules;
-	/* Fin des composants */
 	private JButton _boutonInit;
 	private JButton _boutonLancer;
 	private JToggleButton _boutonPause;
 	private JButton _clearButton;
+	/* Fin des composants */
 
 	public FenetrePrincipale (Modele m) {
 		_m = m;
-        launch=false;
 		_nbCol = m.getGrille().getX();
 		_nbLigne = m.getGrille().getY();
 		_cellules = new JPanel[_nbCol][_nbLigne];
