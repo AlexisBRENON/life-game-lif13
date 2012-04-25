@@ -19,7 +19,7 @@ public class NewApplet extends JApplet implements Runnable {
 	 * Méthode d'initialisation de l'applet
 	 */
     @Override
-	public void init(){
+	public void start(){
 		this.setSize(800, 600);
         c = new Controlleur();
 		this.add(c.getWin().getContentPane());

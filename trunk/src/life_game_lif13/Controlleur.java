@@ -23,8 +23,27 @@ public class Controlleur {
 	private Modele m;
 
 	public Controlleur () {
-		m = new Modele(5,
-					   5);
+		m = new Modele(10,
+					   10);
+		win = new FenetrePrincipale(m);
+		this.connectSignals();
+	}
+
+	public Controlleur (int width, int height) {
+		m = new Modele(width,
+					   height);
+		win = new FenetrePrincipale(m);
+		this.connectSignals();
+	}
+
+	public Controlleur (int nbThread) {
+		m = new Modele(10, 10, nbThread);
+		win = new FenetrePrincipale(m);
+		this.connectSignals();
+	}
+
+	public Controlleur (int width, int height, int nbThread) {
+		m = new Modele(width, height, nbThread);
 		win = new FenetrePrincipale(m);
 		this.connectSignals();
 	}
