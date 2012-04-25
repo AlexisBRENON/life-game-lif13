@@ -198,7 +198,7 @@ public class Controlleur {
          /* Initialise la grille avec des valeur pour chaque cellule aléatoire */
 		m.clear();
 		m.setPaused(true);
-		m.getGrille().initGrille();
+		m.init();
 		win.update(m, null);
 		m.switchPause();
 	}
