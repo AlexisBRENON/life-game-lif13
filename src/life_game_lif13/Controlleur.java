@@ -285,7 +285,7 @@ public class Controlleur {
 	public void onClearAction () {
 		boolean currentState = m.isPaused();
 		m.setPaused(true);
-		m.getGrille().clearGrille();
+		m.clear();
 		win.update(m, null);
 		m.setPaused(currentState);
 	}
@@ -329,6 +329,51 @@ public class Controlleur {
 										 new Cellule(new Coordonnee(1,0), true));
 					pattern.getMap().put(new Coordonnee(1,1),
 										 new Cellule(new Coordonnee(1,1), true));
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("Croix Stable")) {
+					Motif pattern = new Motif(3,3);
+					pattern.addPoint(1, 0);
+					pattern.addPoint(0, 1);
+					pattern.addPoint(1, 2);
+					pattern.addPoint(2, 1);
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("Croix Cyclique")) {
+					Motif pattern = new Motif(9,9);
+					pattern.addPoint(4, 0);
+					pattern.addPoint(4, 1);
+					pattern.addPoint(4, 2);
+					pattern.addPoint(4, 6);
+					pattern.addPoint(4, 7);
+					pattern.addPoint(4, 8);
+					pattern.addPoint(0, 4);
+					pattern.addPoint(1, 4);
+					pattern.addPoint(2, 4);
+					pattern.addPoint(6, 4);
+					pattern.addPoint(7, 4);
+					pattern.addPoint(8, 4);
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("J")) {
+					Motif pattern = new Motif(4,5);
+					pattern.addPoint(1, 0);
+					pattern.addPoint(2, 0);
+					pattern.addPoint(3, 0);
+					pattern.addPoint(2, 1);
+					pattern.addPoint(2, 2);
+					pattern.addPoint(2, 3);
+					pattern.addPoint(2, 4);
+					pattern.addPoint(1, 4);
+					pattern.addPoint(0, 3);
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("A")) {
+					Motif pattern = new Motif(3,4);
+					pattern.addPoint(1, 0);
+					pattern.addPoint(0, 1);
+					pattern.addPoint(2, 1);
+					pattern.addPoint(0, 3);
+					pattern.addPoint(1, 3);
+					pattern.addPoint(2, 3);
+					pattern.addPoint(0, 4);
+					pattern.addPoint(2, 4);
 					m.setPattern(pattern);
 				} else if (s.equalsIgnoreCase("Aléatoire")) {
 					Motif pattern = new Motif(3,3);

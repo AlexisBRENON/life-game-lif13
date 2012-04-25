@@ -44,8 +44,8 @@ public class Motif {
     public void setMap(HashMap<Coordonnee, Cellule> map) {
         this.map = map;
     }
-    
-    
+
+
     public void InitMotif(){
         int i, j;
 	int counter = 0;
@@ -53,7 +53,7 @@ public class Motif {
             for(i= 0; i<x; i++){
                 for(j= 0; j<y; j++){
                     if(new Random().nextBoolean()){
-                        this.map.put(new Coordonnee(i, j), 
+                        this.map.put(new Coordonnee(i, j),
                             new Cellule(new Coordonnee(i, j), true));
                         counter++;
                     }
@@ -61,13 +61,21 @@ public class Motif {
            }
 	} while (counter < (10f/100f)*(x*y));
     }
-    
+
     public void InitMotif(HashMap<Coordonnee, Cellule> oldMap){
         this.map.clear();
         this.map.putAll(oldMap);
     }
-    
+
     public boolean estVivante (Coordonnee c) {
 		return (map.containsKey(c));
+	}
+
+	public void addPoint (int x, int y) {
+		addPoint(new Coordonnee(x, y));
+	}
+
+	public void addPoint (Coordonnee c) {
+		map.put(c, new Cellule(c));
 	}
 }
