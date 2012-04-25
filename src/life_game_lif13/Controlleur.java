@@ -4,14 +4,12 @@
  */
 package life_game_lif13;
 
+import java.awt.Color;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JToggleButton;
+import javax.swing.*;
 
 /**
  *
@@ -81,12 +79,12 @@ public class Controlleur {
 
 					@Override
 					public void mouseEntered (MouseEvent e) {
-						onMouseEnteredOnCell(e);
+						onMouseEnteredOnCell(e, x, y);
 					}
 
 					@Override
 					public void mouseExited (MouseEvent e) {
-						onMouseExitedCell(e);
+						onMouseExitedCell(e, x, y);
 					}
 				});
 			}
@@ -201,9 +199,19 @@ public class Controlleur {
 		m.setPaused(currentState);
 	}
 
-	public void onMouseEnteredOnCell (MouseEvent e) {
-            /*Assombri la cellule selectionné avec la souris*/
-		win.setSelected(e.getComponent(), true);
+	public void onMouseEnteredOnCell (MouseEvent e, int x, int y) {
+        /*Assombri la cellule selectionné avec la souris*/
+		Motif pattern = m.getPattern();
+		for (int i = 0; i < pattern.getX(); i++) {
+			for (int j = 0; j < pattern.getY(); j++) {
+				if (pattern.estVivante(new Coordonnee(i, j))) {
+					JPanel p = win.getCellules()
+							[(i + x - pattern.getX() / 2) % win.getNbCol()]
+							[(j + y - pattern.getY() / 2) % win.getNbLigne()];
+					win.setSelected(p, true);
+				}
+			}
+		}
 	}
 
 	public void onMouseClickedOnCell (MouseEvent e, int x, int y) {
@@ -219,8 +227,18 @@ public class Controlleur {
 		win.update(m, null);
 	}
 
-	public void onMouseExitedCell (MouseEvent e) {
-		win.setSelected(e.getComponent(), false);
+	public void onMouseExitedCell (MouseEvent e, int x, int y) {
+		Motif pattern = m.getPattern();
+		for (int i = 0; i < pattern.getX(); i++) {
+			for (int j = 0; j < pattern.getY(); j++) {
+				if (pattern.estVivante(new Coordonnee(i, j))) {
+					JPanel p = win.getCellules()
+							[(i + x - pattern.getX() / 2) % win.getNbCol()]
+							[(j + y - pattern.getY() / 2) % win.getNbLigne()];
+					win.setSelected(p, false);
+				}
+			}
+		}
 	}
 
 	public void onSaveAction () {
