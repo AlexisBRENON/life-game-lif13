@@ -29,7 +29,8 @@ public class NewApplet extends JApplet implements Runnable {
 	@Override
 	public void run () {
 		this.setVisible(true);
-		c.getWin().setVisible(false);
+                c.getWin().getJMenuBar().setVisible(false);
+		//c.getWin().setVisible(false);
 	}
 
 }
