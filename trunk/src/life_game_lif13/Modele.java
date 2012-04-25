@@ -4,7 +4,6 @@
  */
 package life_game_lif13;
 
-import java.io.IOException;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +48,12 @@ public class Modele extends Observable implements Runnable {
         if (nbThread == 1) {
             calcul();
 		} else {
-			calculThreaded();
+			try {
+				calculThreaded();
+			} catch (InterruptedException ex) {
+				System.out.println("Problème de calcul distribué");
+				calcul();
+			}
 		}
 		setChanged();
 		notifyObservers();
@@ -59,10 +63,15 @@ public class Modele extends Observable implements Runnable {
         grille.etatSuivant();
     }
 
-	private void calculThreaded() {
+	private void calculThreaded() throws InterruptedException {
+		Thread[] tab = new Thread[nbThread];
 		grille.getMapNext().clear();
 		for (int i = 0; i < nbThread; i++) {
-			new Thread(new ThreadedCalcul(nbThread, i, grille)).start();
+			tab[i] = new Thread(new ThreadedCalcul(nbThread, i, grille));
+			tab[i].start();
+		}
+		for (int i = 0; i < nbThread; i++) {
+			tab[i].join();
 		}
 		grille.getMap().clear();
 		grille.getMap().putAll(grille.getMapNext());

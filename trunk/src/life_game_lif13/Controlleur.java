@@ -244,11 +244,9 @@ public class Controlleur {
 				m.getGrille().load(
 						openWindow.getSelectedFile().getAbsolutePath());
 			} catch (IOException ex) {
-				Logger.getLogger(FenetrePrincipale.class.getName()).
-						log(Level.SEVERE,
-							null,
-							ex);
+				System.out.print("Erreur Catch\n");
 			}
+			win.update(m, null);
 		}
 	}
 
