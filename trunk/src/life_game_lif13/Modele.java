@@ -108,6 +108,7 @@ public class Modele extends Observable implements Runnable {
 
 	public void clear () {
 		grille.clearGrille();
+		nbIter = 0;
 	}
 
 	public void addCellule (Coordonnee c) {

@@ -18,6 +18,18 @@ public class Cellule {
         this.etatSuivant=etat;
     }
 
+	public Cellule(Coordonnee coord) {
+		this(coord, true);
+	}
+
+	public Cellule (int x, int y) {
+		this(new Coordonnee(x, y), true);
+	}
+
+	public Cellule() {
+        this(new Coordonnee(), true);
+    }
+
     public Coordonnee getCoord() {
         return coord;
     }
