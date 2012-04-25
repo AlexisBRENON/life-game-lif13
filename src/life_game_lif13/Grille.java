@@ -115,106 +115,54 @@ public class Grille {
 		int c;
 		int nbCases = x * y;
 		int voisin = 0;
-		if (num != nbThread) {
-			for (c = num * (nbCases / nbThread); c < (num + 1) * (nbCases / nbThread); c++) {
-				i = c % x;
-				j = c / x;
-				//test Voisin
-				if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j - 1 + y) % y)))) {
-					voisin++;
-				}
+		for (c = num * (nbCases / nbThread); c < (num + 1) * (nbCases / nbThread); c++) {
+			i = c % x;
+			j = c / x;
+			//test Voisin
+			if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j - 1 + y) % y)))) {
+				voisin++;
+			}
 
-				if (map.containsKey(new Coordonnee(((i) % x), ((j - 1 + y) % y)))) {
-					voisin++;
-				}
+			if (map.containsKey(new Coordonnee(((i) % x), ((j - 1 + y) % y)))) {
+				voisin++;
+			}
 
-				if (map.containsKey(new Coordonnee(((i + 1) % x), ((j - 1 + y) % y)))) {
-					voisin++;
-				}
+			if (map.containsKey(new Coordonnee(((i + 1) % x), ((j - 1 + y) % y)))) {
+				voisin++;
+			}
 
-				if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j) % y)))) {
-					voisin++;
-				}
+			if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j) % y)))) {
+				voisin++;
+			}
 
-				if (map.containsKey(new Coordonnee(((i + 1) % x), ((j) % y)))) {
-					voisin++;
-				}
+			if (map.containsKey(new Coordonnee(((i + 1) % x), ((j) % y)))) {
+				voisin++;
+			}
 
-				if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j + 1) % y)))) {
-					voisin++;
-				}
+			if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j + 1) % y)))) {
+				voisin++;
+			}
 
-				if (map.containsKey(new Coordonnee(((i) % x), ((j + 1) % y)))) {
-					voisin++;
-				}
+			if (map.containsKey(new Coordonnee(((i) % x), ((j + 1) % y)))) {
+				voisin++;
+			}
 
-				if (map.containsKey(new Coordonnee(((i + 1) % x), ((j + 1) % y)))) {
-					voisin++;
-				}
+			if (map.containsKey(new Coordonnee(((i + 1) % x), ((j + 1) % y)))) {
+				voisin++;
+			}
 
-				//action si voisin
-				Coordonnee coord = new Coordonnee(i, j);
+			//action si voisin
+			Coordonnee coord = new Coordonnee(i, j);
 
-				if (map.containsKey(coord)) {
-					if (voisin == 2 || voisin == 3) {
-						mapNext.put(coord, new Cellule(coord, true));
-					}
-				} else if (map.get(coord) == null && voisin == 3) {
+			if (map.containsKey(coord)) {
+				if (voisin == 2 || voisin == 3) {
 					mapNext.put(coord, new Cellule(coord, true));
 				}
-				//reinitialise le nombre de voisin.
-				voisin = 0;
+			} else if (map.get(coord) == null && voisin == 3) {
+				mapNext.put(coord, new Cellule(coord, true));
 			}
-		} else {
-			for (c = num * (nbCases / nbThread); c < nbCases; c++) {
-				i = c % x;
-				j = c / x;
-				//test Voisin
-				if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j - 1 + y) % y)))) {
-					voisin++;
-				}
-
-				if (map.containsKey(new Coordonnee(((i) % x), ((j - 1 + y) % y)))) {
-					voisin++;
-				}
-
-				if (map.containsKey(new Coordonnee(((i + 1) % x), ((j - 1 + y) % y)))) {
-					voisin++;
-				}
-
-				if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j) % y)))) {
-					voisin++;
-				}
-
-				if (map.containsKey(new Coordonnee(((i + 1) % x), ((j) % y)))) {
-					voisin++;
-				}
-
-				if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j + 1) % y)))) {
-					voisin++;
-				}
-
-				if (map.containsKey(new Coordonnee(((i) % x), ((j + 1) % y)))) {
-					voisin++;
-				}
-
-				if (map.containsKey(new Coordonnee(((i + 1) % x), ((j + 1) % y)))) {
-					voisin++;
-				}
-
-				//action si voisin
-				Coordonnee coord = new Coordonnee(i, j);
-
-				if (map.containsKey(coord)) {
-					if (voisin == 2 || voisin == 3) {
-						mapNext.put(coord, new Cellule(coord, true));
-					}
-				} else if (map.get(coord) == null && voisin == 3) {
-					mapNext.put(coord, new Cellule(coord, true));
-				}
-				//reinitialise le nombre de voisin.
-				voisin = 0;
-			}
+			//reinitialise le nombre de voisin.
+			voisin = 0;
 		}
 	}
 
@@ -262,10 +210,9 @@ public class Grille {
 		}
 
 		p.store(out, null);
-		//load(file);
 	}
 
-	public HashMap<Coordonnee, Cellule> load (String file) throws FileNotFoundException, IOException {
+	public void load (String file) throws FileNotFoundException, IOException {
 		int i, j;
 
 		HashMap<Coordonnee, Cellule> loadMap = new HashMap<Coordonnee, Cellule>();
@@ -280,7 +227,6 @@ public class Grille {
 				coord = new Coordonnee(i, j);
 				property = p.getProperty(coord.toString());
 				ok = Boolean.valueOf(property).booleanValue();
-				//System.out.println("x: "+ i+ " y: "+j+" "+ok+property);
 				if (ok) {
 					loadMap.put(coord, new Cellule(coord, true));
 					System.out.println("ok x: " + i + " y: " + j);
@@ -288,7 +234,8 @@ public class Grille {
 				//p.storeToXML(out, coord.toString());
 			}
 		}
-		return loadMap;
+		this.map.clear();
+		this.map.putAll(loadMap);
 	}
 
 	public void addMotifAleatoire (Coordonnee coord, int size) {
