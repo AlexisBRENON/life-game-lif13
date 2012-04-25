@@ -290,7 +290,6 @@ public class Controlleur {
 			Object o = ((JComboBox) source).getSelectedItem();
 			if (o instanceof String) {
 				String s = (String) o;
-				System.out.println(s);
 				if (s.equalsIgnoreCase("Point")) {
 					Motif pattern = new Motif(1, 1);
 					pattern.getMap().put(new Coordonnee(0,0),
