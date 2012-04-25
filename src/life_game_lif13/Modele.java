@@ -26,10 +26,14 @@ public class Modele extends Observable implements Runnable {
 	}
 
 	public Modele(int x, int y, int nbThread){
+		this(x, y, 1f, nbThread);
+	}
+
+	public Modele(int x, int y, float timeStep, int nbThread) {
 		grille = new Grille(x,y);
 		this.nbThread = nbThread;
 		nbIter = 0;
-		t = new ThreadSimu(0.25f, this);
+		t = new ThreadSimu(timeStep, this);
 	}
 
 
@@ -92,8 +96,11 @@ public class Modele extends Observable implements Runnable {
 	public void setPaused (boolean b) {
 		t.setEtatExec(!b);
 	}
+	public boolean isPaused () {
+		return !(t.getEtatExec());
+	}
 	public void switchPause () {
-		t.setEtatExec(!t.isEtatExec());
+		t.setEtatExec(!t.getEtatExec());
 	}
 
 	public void clear () {
@@ -108,11 +115,23 @@ public class Modele extends Observable implements Runnable {
 		grille.removeCellule(c);
 	}
 
+	public void addMotif (Coordonnee c) {
+		grille.addMotif(c, pattern);
+	}
+
 	public int getNbIter () {
 		return nbIter;
 	}
 
 	public int getNbThread () {
 		return nbThread;
+	}
+
+	public Motif getPattern () {
+		return pattern;
+	}
+
+	public void setPattern (Motif pattern) {
+		this.pattern = pattern;
 	}
 }

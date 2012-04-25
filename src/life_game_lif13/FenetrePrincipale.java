@@ -7,8 +7,6 @@ package life_game_lif13;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -67,6 +65,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		_itemAPropos = new JMenuItem("A Propos...");
 		menuFichier.add(_itemOuvrir);
 		menuFichier.add(_itemEnregistrer);
+		menuFichier.add(new JSeparator());
 		menuFichier.add(_itemQuitter);
 		menuAide.add(_itemAPropos);
 		JMenuBar barreMenu = new JMenuBar();
@@ -114,7 +113,10 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 20, 0));
 		_compteur = new JLabel("Nombre d'itérations : 0");
 		_clearButton = new JButton("Effacer");
-		String[] shapeList = {"Point", "Carré", "Trait"};
+		String[] shapeList = {"Point",
+							  "Carré",
+							  "Trait Vertical",
+							  "Trait Horizontal"};
 		_shapesBox = new JComboBox(shapeList);
 		optionPanel.add(_compteur);
 		optionPanel.add(_clearButton);
