@@ -244,10 +244,8 @@ public class Grille {
 		this.ajoutMotif(motif, coord);
 	}
 
-	public void addMotif (Coordonnee coord, int size, HashMap<Coordonnee, Cellule> mapMotif) {
-		Motif motif = new Motif(size, size);
-		motif.InitMotif(mapMotif);
-		this.ajoutMotif(motif, coord);
+	public void addMotif (Coordonnee coord, Motif pattern) {
+		this.ajoutMotif(pattern, coord);
 	}
 
 	private void ajoutMotif (Motif motif, Coordonnee coord) {

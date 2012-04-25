@@ -38,7 +38,7 @@ public class ThreadSimu extends Thread {
 								ex);
 				}
 			}
-                       
+
 			try {
 				Thread.sleep(((long) tempsPause*1000));
 			} catch (InterruptedException ex) {
@@ -47,12 +47,12 @@ public class ThreadSimu extends Thread {
 							null,
 							ex);
 			}
-                        
+
 		}
-               
+
 	}
 
-	public boolean isEtatExec () {
+	public boolean getEtatExec () {
 		return etatExec;
 	}
 

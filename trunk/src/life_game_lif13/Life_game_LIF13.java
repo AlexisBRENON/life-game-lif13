@@ -15,8 +15,8 @@ public class Life_game_LIF13 {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
-		Controlleur c = new Controlleur(100, 100, 2);
+    public static void main(String[] args) {
+		Controlleur c = new Controlleur(80, 80, 0.25f, 2);
 		c.startApp();
     }
 }

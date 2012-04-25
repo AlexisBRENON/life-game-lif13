@@ -23,26 +23,23 @@ public class Controlleur {
 	private Modele m;
 
 	public Controlleur () {
-		m = new Modele(10,10);
-		win = new FenetrePrincipale(m);
-		this.connectSignals();
+		this(10, 10, 1f, 1);
 	}
 
 	public Controlleur (int width, int height) {
-		m = new Modele(width,
-					   height);
-		win = new FenetrePrincipale(m);
-		this.connectSignals();
+		this(width, height, 1f, 1);
 	}
 
 	public Controlleur (int nbThread) {
-		m = new Modele(10, 10, nbThread);
-		win = new FenetrePrincipale(m);
-		this.connectSignals();
+		this(10, 10, 1f, nbThread);
 	}
 
 	public Controlleur (int width, int height, int nbThread) {
-		m = new Modele(width, height, nbThread);
+		this(width, height, 1f, nbThread);
+	}
+
+	public Controlleur (int width, int height, float timeStep, int nbThread) {
+		m = new Modele(width, height, timeStep, nbThread);
 		win = new FenetrePrincipale(m);
 		this.connectSignals();
 	}
@@ -58,7 +55,7 @@ public class Controlleur {
 
 	private void connectSignals() {
             /*Ajout des addlistener sur les différents éléments de la fenetre*/
-		
+
             /*Ajout des listener sur les cellules de la grilles*/
                 for (int j = 0; j < m.getGrille().getY(); j++) {
 			for (int i = 0; i < m.getGrille().getX(); i++) {
@@ -196,11 +193,12 @@ public class Controlleur {
 
 	private void onInitAction () {
          /* Initialise la grille avec des valeur pour chaque cellule aléatoire */
+		boolean currentState = m.isPaused();
 		m.clear();
 		m.setPaused(true);
 		m.init();
 		win.update(m, null);
-		m.switchPause();
+		m.setPaused(currentState);
 	}
 
 	public void onMouseEnteredOnCell (MouseEvent e) {
@@ -209,13 +207,15 @@ public class Controlleur {
 	}
 
 	public void onMouseClickedOnCell (MouseEvent e, int x, int y) {
-            /* Ajoute ou supprime une cellule sur la grille aux coordonnées x, y 
+            /* Ajoute ou supprime une cellule sur la grille aux coordonnées x, y
              */
-		if (m.getGrille().estVivante(x, y)) {
-			m.getGrille().removeCellule(new Coordonnee(x, y));
-		} else {
-			m.getGrille().addCellule(new Coordonnee(x, y));
+		Object o = win.getShapesBox().getSelectedItem();
+		if (o instanceof String) {
+			if (m.getGrille().estVivante(x, y) && ((String)o).equalsIgnoreCase("Point")) {
+				m.getGrille().removeCellule(new Coordonnee(x, y));
+			}
 		}
+		m.addMotif(new Coordonnee(x, y));
 		win.update(m, null);
 	}
 
@@ -259,10 +259,11 @@ public class Controlleur {
 	}
 
 	public void onClearAction () {
+		boolean currentState = m.isPaused();
 		m.setPaused(true);
 		m.getGrille().clearGrille();
 		win.update(m, null);
-		m.setPaused(true);
+		m.setPaused(currentState);
 	}
 
 	public void onShapesBoxSelectionChanged (ActionEvent e) {
@@ -272,6 +273,41 @@ public class Controlleur {
 			if (o instanceof String) {
 				String s = (String) o;
 				System.out.println(s);
+				if (s.equalsIgnoreCase("Point")) {
+					Motif pattern = new Motif(1, 1);
+					pattern.getMap().put(new Coordonnee(0,0),
+										 new Cellule(new Coordonnee(0,0), true));
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("Trait Vertical")) {
+					Motif pattern = new Motif(1, 3);
+					pattern.getMap().put(new Coordonnee(0,0),
+										 new Cellule(new Coordonnee(0,0), true));
+					pattern.getMap().put(new Coordonnee(0,1),
+										 new Cellule(new Coordonnee(0,1), true));
+					pattern.getMap().put(new Coordonnee(0,2),
+										 new Cellule(new Coordonnee(0,2), true));
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("Trait Horizontal")) {
+					Motif pattern = new Motif(3, 1);
+					pattern.getMap().put(new Coordonnee(0,0),
+										 new Cellule(new Coordonnee(0,0), true));
+					pattern.getMap().put(new Coordonnee(1,0),
+										 new Cellule(new Coordonnee(1,0), true));
+					pattern.getMap().put(new Coordonnee(2,0),
+										 new Cellule(new Coordonnee(2,0), true));
+					m.setPattern(pattern);
+				} else if (s.equalsIgnoreCase("Carré")) {
+					Motif pattern = new Motif(2, 2);
+					pattern.getMap().put(new Coordonnee(0,0),
+										 new Cellule(new Coordonnee(0,0), true));
+					pattern.getMap().put(new Coordonnee(0,1),
+										 new Cellule(new Coordonnee(0,1), true));
+					pattern.getMap().put(new Coordonnee(1,0),
+										 new Cellule(new Coordonnee(1,0), true));
+					pattern.getMap().put(new Coordonnee(1,1),
+										 new Cellule(new Coordonnee(1,1), true));
+					m.setPattern(pattern);
+				}
 			}
 		}
 	}
