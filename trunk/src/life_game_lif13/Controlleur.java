@@ -206,8 +206,8 @@ public class Controlleur {
 			for (int j = 0; j < pattern.getY(); j++) {
 				if (pattern.estVivante(new Coordonnee(i, j))) {
 					JPanel p = win.getCellules()
-							[(i + x - pattern.getX() / 2) % win.getNbCol()]
-							[(j + y - pattern.getY() / 2) % win.getNbLigne()];
+							[((i + x - pattern.getX() / 2) + win.getNbCol()) % win.getNbCol()]
+							[((j + y - pattern.getY() / 2) + win.getNbLigne()) % win.getNbLigne()];
 					win.setSelected(p, true);
 				}
 			}
@@ -233,8 +233,8 @@ public class Controlleur {
 			for (int j = 0; j < pattern.getY(); j++) {
 				if (pattern.estVivante(new Coordonnee(i, j))) {
 					JPanel p = win.getCellules()
-							[(i + x - pattern.getX() / 2) % win.getNbCol()]
-							[(j + y - pattern.getY() / 2) % win.getNbLigne()];
+							[((i + x - pattern.getX() / 2) + win.getNbCol()) % win.getNbCol()]
+							[((j + y - pattern.getY() / 2) + win.getNbLigne()) % win.getNbLigne()];
 					win.setSelected(p, false);
 				}
 			}

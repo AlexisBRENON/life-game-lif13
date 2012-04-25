@@ -253,8 +253,8 @@ public class Grille {
 		for (i = 0; i < motif.getX(); i++) {
 			for (j = 0; j < motif.getY(); j++) {
 				Coordonnee coordGrille = new Coordonnee(
-						(i + coord.getX() - motif.getX() / 2) % this.x,
-						(j + coord.getY() - motif.getY() / 2) % this.y);
+						((i + coord.getX() - motif.getX() / 2) + this.x) % this.x,
+						((j + coord.getY() - motif.getY() / 2) + this.y) % this.y);
 				if (motif.estVivante(new Coordonnee(i, j))) {
 					this.addCellule(coordGrille);
 				}
