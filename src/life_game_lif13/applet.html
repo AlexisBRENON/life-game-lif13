@@ -1,18 +1,33 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- ########################## IMPORTANT NOTE ############################ -->
+<!-- This preview HTML page will work only with JDK 6 update 10 and higher! -->
+<!-- ###################################################################### -->
 <html>
     <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Life Games</title>
     </head>
     <body>
-    <applet name="NewApplet" code="life_game_lif13.NewApplet.class" 
-		archive="life_game_LIF13.jar" height="600" width="800" >
-        <param name="message" value="Message pour les ZérOs">
-    </applet>
-
-</body>
+        <h3 align = "center">Life Games</h3>
+        <script src="http://java.com/js/deployJava.js"></script>
+        <div align="center">
+            <script>
+                var attributes = {
+                    code:       "life_game_lif13.NewApplet",
+                    archive:    "life_game_LIF13.jar",
+                    width:      800,
+                    height:     600
+                };
+                var parameters = {jnlp_href:"launch.jnlp"}; <!-- Applet Parameters -->
+                var version = "1.6"; <!-- Required Java Version -->
+                deployJava.runApplet(attributes, parameters, version);
+            </script>
+            <!-- Or use the following applet element to launch the applet using jnlp_href -->
+            <!--
+            <applet width="800" height="600">
+                <param name="jnlp_href" value="launch.jnlp"/>
+            </applet>
+            -->
+        </div>
+     	<p> Created by Alexis Brenon & Johann Hofstetter</p>
+    </body>
 </html>
