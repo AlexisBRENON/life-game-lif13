@@ -34,6 +34,9 @@ public class Modele extends Observable implements Runnable {
 		this.nbThread = nbThread;
 		nbIter = 0;
 		t = new ThreadSimu(timeStep, this);
+		pattern = new Motif(1, 1);
+		pattern.getMap().put(new Coordonnee(0,0),
+							 new Cellule(new Coordonnee(0,0), true));
 	}
 
 
