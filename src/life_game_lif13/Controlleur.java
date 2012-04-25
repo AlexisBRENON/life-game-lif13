@@ -23,8 +23,7 @@ public class Controlleur {
 	private Modele m;
 
 	public Controlleur () {
-		m = new Modele(10,
-					   10);
+		m = new Modele(10,10);
 		win = new FenetrePrincipale(m);
 		this.connectSignals();
 	}
@@ -58,7 +57,10 @@ public class Controlleur {
 	}
 
 	private void connectSignals() {
-		for (int j = 0; j < m.getGrille().getY(); j++) {
+            /*Ajout des addlistener sur les différents éléments de la fenetre*/
+		
+            /*Ajout des listener sur les cellules de la grilles*/
+                for (int j = 0; j < m.getGrille().getY(); j++) {
 			for (int i = 0; i < m.getGrille().getX(); i++) {
 				final int x = i;
 				final int y = j;
@@ -93,7 +95,7 @@ public class Controlleur {
 			}
 		}
 
-		/* Connection des signaux */
+		/* Connection des signaux sur le fenetre principale*/
 		m.addObserver(win);
 		win.addWindowListener(
 				new WindowAdapter() {
@@ -173,6 +175,7 @@ public class Controlleur {
 	}
 
 	private void onLaunchAction (ActionEvent e) {
+            /* Lance le jeu de la vie*/
 		Object o;
 		o = e.getSource();
 		if (o instanceof JButton) {
@@ -182,6 +185,7 @@ public class Controlleur {
 	}
 
 	private void onPauseAction (ActionEvent e) {
+            /* Met en pause le jeu */
 		m.switchPause();
 		Object o;
 		o = e.getSource();
@@ -191,6 +195,7 @@ public class Controlleur {
 	}
 
 	private void onInitAction () {
+         /* Initialise la grille avec des valeur pour chaque cellule aléatoire */
 		m.clear();
 		m.setPaused(true);
 		m.getGrille().initGrille();
@@ -199,10 +204,13 @@ public class Controlleur {
 	}
 
 	public void onMouseEnteredOnCell (MouseEvent e) {
+            /*Assombri la cellule selectionné avec la souris*/
 		win.setSelected(e.getComponent(), true);
 	}
 
 	public void onMouseClickedOnCell (MouseEvent e, int x, int y) {
+            /* Ajoute ou supprime une cellule sur la grille aux coordonnées x, y 
+             */
 		if (m.getGrille().estVivante(x, y)) {
 			m.getGrille().removeCellule(new Coordonnee(x, y));
 		} else {
