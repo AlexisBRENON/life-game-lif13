@@ -7,6 +7,8 @@ package life_game_lif13;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -131,12 +133,28 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	@Override
 	public void update (Observable o,
 						Object arg) {
+		if (_m.getNbThread() == 1) {
 		for (int i = 0; i < _nbCol; i++) {
 			for (int j = 0; j < _nbLigne; j++) {
 				if (_m.estVivante(i, j)) {
 					_cellules[i][j].setBackground(Color.red);
 				} else {
 					_cellules[i][j].setBackground(Color.white);
+				}
+			}
+		}
+		} else {
+			Thread[] tab = new Thread[_m.getNbThread()];
+			for (int i = 0; i < _m.getNbThread(); i++) {
+				tab[i] = new Thread(new ThreadedUpdate(_m.getNbThread(), i, this));
+				tab[i].start();
+			}
+			for (int i = 0; i < _m.getNbThread(); i++) {
+				try {
+					tab[i].join();
+				} catch (InterruptedException ex) {
+					System.out.println("Problème de calcul distribué...");
+					System.exit(1);
 				}
 			}
 		}
@@ -208,4 +226,6 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 			}
 		}
 	}
+
+
 }

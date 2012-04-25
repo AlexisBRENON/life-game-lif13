@@ -5,8 +5,6 @@
 package life_game_lif13;
 
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,7 +29,7 @@ public class Modele extends Observable implements Runnable {
 		grille = new Grille(x,y);
 		this.nbThread = nbThread;
 		nbIter = 0;
-		t = new ThreadSimu(1f, this);
+		t = new ThreadSimu(0.25f, this);
 	}
 
 
@@ -41,6 +39,11 @@ public class Modele extends Observable implements Runnable {
 
 	public void lancerThread () {
 		t.start();
+	}
+
+	public void init() {
+		nbIter = 0;
+		grille.initGrille();
 	}
 
     @Override
@@ -109,4 +112,7 @@ public class Modele extends Observable implements Runnable {
 		return nbIter;
 	}
 
+	public int getNbThread () {
+		return nbThread;
+	}
 }
