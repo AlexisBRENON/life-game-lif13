@@ -17,6 +17,7 @@ public class Modele extends Observable implements Runnable {
     private Grille grille;
 	private ThreadSimu t;
 	private Motif pattern;
+	private int nbThread;
 
     public Modele(){
 		this(10,10);
@@ -24,8 +25,16 @@ public class Modele extends Observable implements Runnable {
 
 	public Modele(int x, int y){
 		grille = new Grille(x,y);
+		nbThread = 1;
 		t = new ThreadSimu(1f, this);
 	}
+
+	public Modele(int x, int y, int nbThread){
+		grille = new Grille(x,y);
+		this.nbThread = nbThread;
+		t = new ThreadSimu(1f, this);
+	}
+
 
 	public Grille getGrille () {
 		return grille;
@@ -37,18 +46,27 @@ public class Modele extends Observable implements Runnable {
 
     @Override
     public void run() {
-        try {
+        if (nbThread == 1) {
             calcul();
-        } catch (IOException ex) {
-            Logger.getLogger(Modele.class.getName()).log(Level.SEVERE, null, ex);
-        }
+		} else {
+			calculThreaded();
+		}
 		setChanged();
 		notifyObservers();
     }
 
-    public void calcul() throws IOException{
+    public void calcul() {
         grille.etatSuivant();
     }
+
+	private void calculThreaded() {
+		grille.getMapNext().clear();
+		for (int i = 0; i < nbThread; i++) {
+			new Thread(new ThreadedCalcul(nbThread, i, grille)).start();
+		}
+		grille.getMap().clear();
+		grille.getMap().putAll(grille.getMapNext());
+	}
 
 	public boolean estVivante(int x, int y) {
 		return grille.estVivante(x,y);
