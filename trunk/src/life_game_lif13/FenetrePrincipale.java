@@ -34,6 +34,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private JButton _boutonLancer;
 	private JToggleButton _boutonPause;
 	private JButton _clearButton;
+	private JLabel _compteur;
 	/*
 	 * Fin des composants
 	 */
@@ -106,12 +107,14 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		panelPrincipal.add(panelBoutons, BorderLayout.EAST);
 
 		/*
-		 * Ajout des boutons optionnels
+		 * Ajout des infos optionnels
 		 */
-		JPanel optionPanel = new JPanel(new FlowLayout());
+		JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 20, 0));
+		_compteur = new JLabel("Nombre d'itérations : 0");
 		_clearButton = new JButton("Effacer");
 		String[] shapeList = {"Point", "Carré", "Trait"};
 		_shapesBox = new JComboBox(shapeList);
+		optionPanel.add(_compteur);
 		optionPanel.add(_clearButton);
 		optionPanel.add(_shapesBox);
 		panelPrincipal.add(optionPanel, BorderLayout.SOUTH);
@@ -137,6 +140,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 				}
 			}
 		}
+		_compteur.setText("Nombre d'itérations : "+Integer.toString(_m.getNbIter()));
 	}
 
 	public JMenuItem getItemAPropos () {

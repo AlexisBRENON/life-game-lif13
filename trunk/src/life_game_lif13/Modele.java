@@ -17,20 +17,20 @@ public class Modele extends Observable implements Runnable {
 	private ThreadSimu t;
 	private Motif pattern;
 	private int nbThread;
+	private int nbIter;
 
     public Modele(){
 		this(10,10);
 	}
 
 	public Modele(int x, int y){
-		grille = new Grille(x,y);
-		nbThread = 1;
-		t = new ThreadSimu(1f, this);
+		this(x,y,1);
 	}
 
 	public Modele(int x, int y, int nbThread){
 		grille = new Grille(x,y);
 		this.nbThread = nbThread;
+		nbIter = 0;
 		t = new ThreadSimu(1f, this);
 	}
 
@@ -55,6 +55,7 @@ public class Modele extends Observable implements Runnable {
 				calcul();
 			}
 		}
+		nbIter++;
 		setChanged();
 		notifyObservers();
     }
@@ -103,4 +104,9 @@ public class Modele extends Observable implements Runnable {
 	public void removeCellule (Coordonnee c) {
 		grille.removeCellule(c);
 	}
+
+	public int getNbIter () {
+		return nbIter;
+	}
+
 }
