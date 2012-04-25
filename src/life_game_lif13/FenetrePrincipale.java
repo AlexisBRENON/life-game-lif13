@@ -9,19 +9,20 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 
-
 /**
  *
  * @author alexis
  */
 public class FenetrePrincipale extends JFrame implements Runnable, Observer {
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 1L;
 	private int _nbCol;
 	private int _nbLigne;
 	private Modele _m;
 
-	/* Composants de la fenêtre */
+	/*
+	 * Composants de la fenêtre
+	 */
 	private JMenuItem _itemEnregistrer;
 	private JMenuItem _itemOuvrir;
 	private JMenuItem _itemQuitter;
@@ -33,7 +34,9 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private JButton _boutonLancer;
 	private JToggleButton _boutonPause;
 	private JButton _clearButton;
-	/* Fin des composants */
+	/*
+	 * Fin des composants
+	 */
 
 	public FenetrePrincipale (Modele m) {
 		_m = m;
@@ -43,12 +46,15 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		build();
 	}
 
-
-	private void build() {
-		/* Création de l'interface */
+	private void build () {
+		/*
+		 * Création de l'interface
+		 */
 		this.setMinimumSize(new Dimension(750, 600));
 
-		/* Création de la barre de menu */
+		/*
+		 * Création de la barre de menu
+		 */
 		JMenu menuFichier = new JMenu("Fichier");
 		JMenu menuEdition = new JMenu("Edition");
 		JMenu menuAide = new JMenu("Aide");
@@ -66,15 +72,19 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		barreMenu.add(menuAide);
 		this.setJMenuBar(barreMenu);
 
-		/* Définition du layout principal */
+		/*
+		 * Définition du layout principal
+		 */
 		JPanel panelPrincipal = new JPanel(new BorderLayout());
 		this.setContentPane(panelPrincipal);
 
-		/* Création de la grille */
+		/*
+		 * Création de la grille
+		 */
 		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
 		for (int j = 0; j < _nbLigne; j++) {
 			for (int i = 0; i < _nbCol; i++) {
-				final int x=i, y=j;
+				final int x = i, y = j;
 				_cellules[i][j] = new JPanel();
 				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 				_cellules[i][j].setBackground(Color.white);
@@ -83,7 +93,9 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		}
 		panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
 
-		/* Création des boutons principaux */
+		/*
+		 * Création des boutons principaux
+		 */
 		JPanel panelBoutons = new JPanel(new GridLayout(3, 0, 5, 5));
 		_boutonLancer = new JButton("Lancer !");
 		_boutonPause = new JToggleButton("Pause");
@@ -93,7 +105,9 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		panelBoutons.add(_boutonPause);
 		panelPrincipal.add(panelBoutons, BorderLayout.EAST);
 
-		/* Ajout des boutons optionnels */
+		/*
+		 * Ajout des boutons optionnels
+		 */
 		JPanel optionPanel = new JPanel(new FlowLayout());
 		_clearButton = new JButton("Effacer");
 		String[] shapeList = {"Point", "Carré", "Trait"};
@@ -116,7 +130,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 						Object arg) {
 		for (int i = 0; i < _nbCol; i++) {
 			for (int j = 0; j < _nbLigne; j++) {
-				if (_m.estVivante(i,j)) {
+				if (_m.estVivante(i, j)) {
 					_cellules[i][j].setBackground(Color.red);
 				} else {
 					_cellules[i][j].setBackground(Color.white);
@@ -184,9 +198,9 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	public void setSelected (Object o, boolean b) {
 		if (o instanceof JPanel) {
 			if (b) {
-				((JPanel)o).setBackground(((JPanel)o).getBackground().darker());
+				((JPanel) o).setBackground(((JPanel) o).getBackground().darker());
 			} else {
-				((JPanel)o).setBackground(((JPanel)o).getBackground().brighter());
+				((JPanel) o).setBackground(((JPanel) o).getBackground().brighter());
 			}
 		}
 	}

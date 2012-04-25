@@ -12,24 +12,24 @@ import javax.swing.JLabel;
  *
  * @author t0rp
  */
-public class NewApplet extends JApplet {
+public class NewApplet extends JApplet implements Runnable {
 	private static final long serialVersionUID = 1L;
-
-        private JLabel label = new JLabel();
-	private JButton bouton = new JButton("Cliquez");
-	private int count = 0;
+	Controlleur c;
 	/**
 	 * Méthode d'initialisation de l'applet
-	 * C'est cette méthode qui fait office de constructeur
 	 */
     @Override
 	public void init(){
-		this.setSize(300, 300);
-                Modele m =new Modele(10,10);
+		this.setSize(800, 600);
+        c = new Controlleur();
+		this.add(c.getWin().getContentPane());
+		new Thread(this).start();
+	}
 
-                FenetrePrincipale f = new FenetrePrincipale(m);
-
-		new Thread(f).start();
+	@Override
+	public void run () {
+		this.setVisible(true);
+		c.getWin().setVisible(false);
 	}
 
 }

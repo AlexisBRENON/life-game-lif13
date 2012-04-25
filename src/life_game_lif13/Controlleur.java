@@ -33,6 +33,11 @@ public class Controlleur {
 		new Thread(win).start();
 	}
 
+	public void startApplet() {
+		new Thread(win).start();
+		win.setVisible(false);
+	}
+
 	private void connectSignals() {
 		for (int j = 0; j < m.getGrille().getY(); j++) {
 			for (int i = 0; i < m.getGrille().getX(); i++) {
@@ -245,4 +250,10 @@ public class Controlleur {
 			}
 		}
 	}
+
+	public FenetrePrincipale getWin () {
+		return win;
+	}
+
+
 }
