@@ -55,18 +55,15 @@ public class Controlleur {
             /*Ajout des addlistener sur les différents éléments de la fenetre*/
 
             /*Ajout des listener sur les cellules de la grilles*/
-                for (int j = 0; j < m.getGrille().getY(); j++) {
-			for (int i = 0; i < m.getGrille().getX(); i++) {
+                for (int j = 0; j < win.getNbLigne(); j++) {
+			for (int i = 0; i < win.getNbCol(); i++) {
 				final int x = i;
 				final int y = j;
 				win.getCellules()[i][j].addMouseListener(new MouseListener() {
 
 					@Override
 					public void mouseClicked (MouseEvent e) {
-						//System.out.println(x+" "+y);
-						onMouseClickedOnCell(e,
-											 x,
-											 y);
+						onMouseClickedOnCell(e, x, y);
 					}
 
 					@Override
@@ -170,13 +167,14 @@ public class Controlleur {
 	}
 
 	private void onLaunchAction (ActionEvent e) {
-            /* Lance le jeu de la vie*/
 		Object o;
 		o = e.getSource();
 		if (o instanceof JButton) {
-			((JButton) o).setEnabled(false);
+			JButton b = (JButton) o;
+			/* Lance le jeux de la vie */
+			m.lancerSimulation();
+			b.setEnabled(false);
 		}
-		m.lancerThread();
 	}
 
 	private void onPauseAction (ActionEvent e) {
@@ -190,17 +188,17 @@ public class Controlleur {
 	}
 
 	private void onInitAction () {
-         /* Initialise la grille avec des valeur pour chaque cellule aléatoire */
+         /* Initialise la grille aléatoirement */
 		boolean currentState = m.isPaused();
 		m.clear();
 		m.setPaused(true);
-		m.init();
+		m.reInit();
 		win.update(m, null);
 		m.setPaused(currentState);
 	}
 
 	public void onMouseEnteredOnCell (MouseEvent e, int x, int y) {
-        /*Assombri la cellule selectionné avec la souris*/
+        /*Assombri les cellules recouvertes par le pattern */
 		Motif pattern = m.getPattern();
 		for (int i = 0; i < pattern.getX(); i++) {
 			for (int j = 0; j < pattern.getY(); j++) {
@@ -215,7 +213,7 @@ public class Controlleur {
 	}
 
 	public void onMouseClickedOnCell (MouseEvent e, int x, int y) {
-            /* Ajoute ou supprime une cellule sur la grille aux coordonnées x, y
+            /* Un pattern ou supprime UNE cellule
              */
 		Object o = win.getShapesBox().getSelectedItem();
 		if (o instanceof String) {
@@ -234,6 +232,7 @@ public class Controlleur {
 	}
 
 	public void onMouseExitedCell (MouseEvent e, int x, int y) {
+		/* Réinitialise la couleur des cellules mises en évidences */
 		Motif pattern = m.getPattern();
 		for (int i = 0; i < pattern.getX(); i++) {
 			for (int j = 0; j < pattern.getY(); j++) {
@@ -248,6 +247,7 @@ public class Controlleur {
 	}
 
 	public void onSaveAction () {
+		/* Ouvre une fenêtre de sauvegarde de fichier et lance la sauvegarde */
 		int result;
 		JFileChooser saveWindow = new JFileChooser();
 
@@ -267,6 +267,7 @@ public class Controlleur {
 	}
 
 	public void onOpenAction () {
+		/* Ouvre la fenêtre d'ouverture et charge le fichier */
 		int result;
 		JFileChooser openWindow = new JFileChooser();
 
@@ -283,6 +284,7 @@ public class Controlleur {
 	}
 
 	public void onClearAction () {
+		/* Efface la grille */
 		boolean currentState = m.isPaused();
 		m.setPaused(true);
 		m.clear();
@@ -291,95 +293,13 @@ public class Controlleur {
 	}
 
 	public void onShapesBoxSelectionChanged (ActionEvent e) {
+		/* Change le pattern d'ajout */
 		Object source = e.getSource();
 		if (source instanceof JComboBox) {
 			Object o = ((JComboBox) source).getSelectedItem();
 			if (o instanceof String) {
 				String s = (String) o;
-				if (s.equalsIgnoreCase("Point")) {
-					Motif pattern = new Motif(1, 1);
-					pattern.getMap().put(new Coordonnee(0,0),
-										 new Cellule(new Coordonnee(0,0), true));
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("Trait Vertical")) {
-					Motif pattern = new Motif(1, 3);
-					pattern.getMap().put(new Coordonnee(0,0),
-										 new Cellule(new Coordonnee(0,0), true));
-					pattern.getMap().put(new Coordonnee(0,1),
-										 new Cellule(new Coordonnee(0,1), true));
-					pattern.getMap().put(new Coordonnee(0,2),
-										 new Cellule(new Coordonnee(0,2), true));
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("Trait Horizontal")) {
-					Motif pattern = new Motif(3, 1);
-					pattern.getMap().put(new Coordonnee(0,0),
-										 new Cellule(new Coordonnee(0,0), true));
-					pattern.getMap().put(new Coordonnee(1,0),
-										 new Cellule(new Coordonnee(1,0), true));
-					pattern.getMap().put(new Coordonnee(2,0),
-										 new Cellule(new Coordonnee(2,0), true));
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("Carré")) {
-					Motif pattern = new Motif(2, 2);
-					pattern.getMap().put(new Coordonnee(0,0),
-										 new Cellule(new Coordonnee(0,0), true));
-					pattern.getMap().put(new Coordonnee(0,1),
-										 new Cellule(new Coordonnee(0,1), true));
-					pattern.getMap().put(new Coordonnee(1,0),
-										 new Cellule(new Coordonnee(1,0), true));
-					pattern.getMap().put(new Coordonnee(1,1),
-										 new Cellule(new Coordonnee(1,1), true));
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("Croix Stable")) {
-					Motif pattern = new Motif(3,3);
-					pattern.addPoint(1, 0);
-					pattern.addPoint(0, 1);
-					pattern.addPoint(1, 2);
-					pattern.addPoint(2, 1);
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("Croix Cyclique")) {
-					Motif pattern = new Motif(9,9);
-					pattern.addPoint(4, 0);
-					pattern.addPoint(4, 1);
-					pattern.addPoint(4, 2);
-					pattern.addPoint(4, 6);
-					pattern.addPoint(4, 7);
-					pattern.addPoint(4, 8);
-					pattern.addPoint(0, 4);
-					pattern.addPoint(1, 4);
-					pattern.addPoint(2, 4);
-					pattern.addPoint(6, 4);
-					pattern.addPoint(7, 4);
-					pattern.addPoint(8, 4);
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("J")) {
-					Motif pattern = new Motif(4,5);
-					pattern.addPoint(1, 0);
-					pattern.addPoint(2, 0);
-					pattern.addPoint(3, 0);
-					pattern.addPoint(2, 1);
-					pattern.addPoint(2, 2);
-					pattern.addPoint(2, 3);
-					pattern.addPoint(2, 4);
-					pattern.addPoint(1, 4);
-					pattern.addPoint(0, 3);
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("A")) {
-					Motif pattern = new Motif(3,4);
-					pattern.addPoint(1, 0);
-					pattern.addPoint(0, 1);
-					pattern.addPoint(2, 1);
-					pattern.addPoint(0, 3);
-					pattern.addPoint(1, 3);
-					pattern.addPoint(2, 3);
-					pattern.addPoint(0, 4);
-					pattern.addPoint(2, 4);
-					m.setPattern(pattern);
-				} else if (s.equalsIgnoreCase("Aléatoire")) {
-					Motif pattern = new Motif(3,3);
-					pattern.InitMotif();
-					m.setPattern(pattern);
-				}
+				m.setPattern(win.getPatternList().get(s));
 			}
 		}
 	}
@@ -387,6 +307,5 @@ public class Controlleur {
 	public FenetrePrincipale getWin () {
 		return win;
 	}
-
 
 }

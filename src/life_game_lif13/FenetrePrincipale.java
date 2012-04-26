@@ -5,8 +5,10 @@
 package life_game_lif13;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 import javax.swing.*;
 
 /**
@@ -18,7 +20,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private static final long serialVersionUID = 1L;
 	private int _nbCol;
 	private int _nbLigne;
-	private Modele _m;
+	private HashMap<String, Motif> patternList;
 
 	/*
 	 * Composants de la fenêtre
@@ -40,10 +42,11 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	 */
 
 	public FenetrePrincipale (Modele m) {
-		_m = m;
 		_nbCol = m.getGrille().getX();
 		_nbLigne = m.getGrille().getY();
 		_cellules = new JPanel[_nbCol][_nbLigne];
+		this.patternList = new HashMap<String, Motif>();
+		initPatterns();
 		build();
 	}
 
@@ -113,23 +116,126 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 20, 0));
 		_compteur = new JLabel("Nombre d'itérations : 0");
 		_clearButton = new JButton("Effacer");
-		String[] shapeList = {"Point",
-							  "Carré",
-							  "Trait Vertical",
-							  "Trait Horizontal",
-							  "Croix Stable",
-							  "Croix Cyclique",
-							  "J",
-							  "A",
-							  "Aléatoire"};
-		_shapesBox = new JComboBox(shapeList);
+		Set<String> shapeList = patternList.keySet();
+		_shapesBox = new JComboBox(shapeList.toArray());
+		_shapesBox.setSelectedItem("Point");
 		optionPanel.add(_compteur);
 		optionPanel.add(_clearButton);
 		optionPanel.add(_shapesBox);
 		panelPrincipal.add(optionPanel, BorderLayout.SOUTH);
+	}
 
+	private void initPatterns () {
+		Motif pattern = new Motif(1, 1);
+		pattern.addPoint(0, 0);
+		patternList.put("Point", pattern);
 
+		pattern = new Motif(3, 1);
+		pattern.addPoint(0, 0);
+		pattern.addPoint(1, 0);
+		pattern.addPoint(2, 0);
+		patternList.put("Trait Horizontal", pattern);
 
+		pattern = new Motif(1, 3);
+		pattern.addPoint(0, 0);
+		pattern.addPoint(0, 1);
+		pattern.addPoint(0, 2);
+		patternList.put("Trait Vertical", pattern);
+
+		pattern = new Motif(2,2);
+		pattern.addPoint(0, 0);
+		pattern.addPoint(0, 1);
+		pattern.addPoint(1, 0);
+		pattern.addPoint(1, 1);
+		patternList.put("Carré", pattern);
+
+		pattern = new Motif(3, 3);
+		pattern.addPoint(1, 0);
+		pattern.addPoint(0, 1);
+		pattern.addPoint(1, 2);
+		pattern.addPoint(2, 1);
+		patternList.put("Croix Stable", pattern);
+
+		pattern = new Motif(9,9);
+		pattern.addPoint(4, 0);
+		pattern.addPoint(4, 1);
+		pattern.addPoint(4, 2);
+		pattern.addPoint(4, 6);
+		pattern.addPoint(4, 7);
+		pattern.addPoint(4, 8);
+		pattern.addPoint(0, 4);
+		pattern.addPoint(1, 4);
+		pattern.addPoint(2, 4);
+		pattern.addPoint(6, 4);
+		pattern.addPoint(7, 4);
+		pattern.addPoint(8, 4);
+		patternList.put("Croix Cyclique", pattern);
+
+		pattern = new Motif(4,5);
+		pattern.addPoint(1, 0);
+		pattern.addPoint(2, 0);
+		pattern.addPoint(3, 0);
+		pattern.addPoint(2, 1);
+		pattern.addPoint(2, 2);
+		pattern.addPoint(2, 3);
+		pattern.addPoint(2, 4);
+		pattern.addPoint(1, 4);
+		pattern.addPoint(0, 3);
+		patternList.put("J", pattern);
+
+		pattern = new Motif(3,4);
+		pattern.addPoint(1, 0);
+		pattern.addPoint(0, 1);
+		pattern.addPoint(2, 1);
+		pattern.addPoint(0, 2);
+		pattern.addPoint(1, 2);
+		pattern.addPoint(2, 2);
+		pattern.addPoint(0, 3);
+		pattern.addPoint(2, 3);
+		patternList.put("A", pattern);
+
+		pattern = new Motif(36, 9);
+		pattern.addPoint(0, 4);
+		pattern.addPoint(0, 5);
+		pattern.addPoint(1, 4);
+		pattern.addPoint(1, 5);
+		pattern.addPoint(10, 4);
+		pattern.addPoint(10, 5);
+		pattern.addPoint(10, 6);
+		pattern.addPoint(11, 3);
+		pattern.addPoint(11, 7);
+		pattern.addPoint(12, 2);
+		pattern.addPoint(12, 8);
+		pattern.addPoint(13, 2);
+		pattern.addPoint(13, 8);
+		pattern.addPoint(14, 5);
+		pattern.addPoint(15, 3);
+		pattern.addPoint(15, 7);
+		pattern.addPoint(16, 4);
+		pattern.addPoint(16, 5);
+		pattern.addPoint(16, 6);
+		pattern.addPoint(17, 5);
+		pattern.addPoint(20, 2);
+		pattern.addPoint(20, 3);
+		pattern.addPoint(20, 4);
+		pattern.addPoint(21, 2);
+		pattern.addPoint(21, 3);
+		pattern.addPoint(21, 4);
+		pattern.addPoint(22, 1);
+		pattern.addPoint(22, 5);
+		pattern.addPoint(24, 0);
+		pattern.addPoint(24, 1);
+		pattern.addPoint(24, 5);
+		pattern.addPoint(24, 6);
+		pattern.addPoint(34, 2);
+		pattern.addPoint(34, 3);
+		pattern.addPoint(35, 2);
+		pattern.addPoint(35, 3);
+		patternList.put("Gun (36*9)", pattern);
+
+		pattern = new Motif((int)(Math.random()*_nbCol),(int)(Math.random()*_nbLigne));
+		pattern.InitMotif();
+		patternList.put("Aléatoire", pattern);
 	}
 
 	@Override
@@ -140,32 +246,21 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	@Override
 	public void update (Observable o,
 						Object arg) {
-		if (_m.getNbThread() == 1) {
-		for (int i = 0; i < _nbCol; i++) {
-			for (int j = 0; j < _nbLigne; j++) {
-				if (_m.estVivante(i, j)) {
-					_cellules[i][j].setBackground(Color.red);
-				} else {
-					_cellules[i][j].setBackground(Color.white);
+		if (o instanceof Modele) {
+			Modele m = (Modele) o;
+			for (int i = 0; i < _nbCol; i++) {
+				for (int j = 0; j < _nbLigne; j++) {
+					if (m.estVivante(i, j)) {
+						_cellules[i][j].setBackground(Color.red);
+					} else {
+						_cellules[i][j].setBackground(Color.white);
+					}
 				}
 			}
-		}
+			_compteur.setText("Nombre d'itérations : "+Integer.toString(m.getNbIter()));
 		} else {
-			Thread[] tab = new Thread[_m.getNbThread()];
-			for (int i = 0; i < _m.getNbThread(); i++) {
-				tab[i] = new Thread(new ThreadedUpdate(_m.getNbThread(), i, this));
-				tab[i].start();
-			}
-			for (int i = 0; i < _m.getNbThread(); i++) {
-				try {
-					tab[i].join();
-				} catch (InterruptedException ex) {
-					System.out.println("Problème de calcul distribué...");
-					System.exit(1);
-				}
-			}
+			System.out.println("Problème de mise à jour.");
 		}
-		_compteur.setText("Nombre d'itérations : "+Integer.toString(_m.getNbIter()));
 	}
 
 	public JMenuItem getItemAPropos () {
@@ -182,10 +277,6 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 
 	public JMenuItem getItemQuitter () {
 		return _itemQuitter;
-	}
-
-	public Modele getM () {
-		return _m;
 	}
 
 	public int getNbCol () {
@@ -232,6 +323,10 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 				((JPanel) o).setBackground(((JPanel) o).getBackground().brighter());
 			}
 		}
+	}
+
+	public HashMap<String, Motif> getPatternList () {
+		return patternList;
 	}
 
 
