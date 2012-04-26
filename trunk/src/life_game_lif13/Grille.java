@@ -206,7 +206,7 @@ public class Grille {
 		Date date = new Date();
 		p.clear();
 		p.store(out, "save " + dateFormat.format(date));
-                
+
 		for (j = 0; j < y; j++) {
 			for (i = 0; i < x; i++) {
 				Coordonnee coord = new Coordonnee(i, j);
@@ -234,13 +234,13 @@ public class Grille {
                 this.x=Integer.parseInt(p.getProperty("x"));
                 this.y=Integer.parseInt(p.getProperty("y"));
                 System.out.println("grille: "+x+" "+y);
-                
+
 		for (j = 0; j < y; j++) {
 			for (i = 0; i < x; i++) {
 				coord = new Coordonnee(i, j);
 				property = p.getProperty(coord.toString());
 				ok = Boolean.valueOf(property).booleanValue();
-                               
+
 				if(ok){
                                      System.out.println(property);
                                     if (property.equals("true")) {
@@ -287,4 +287,13 @@ public class Grille {
 	public HashMap<Coordonnee, Cellule> getMapNext () {
 		return mapNext;
 	}
+
+	public void setX (int x) {
+		this.x = x;
+	}
+
+	public void setY (int y) {
+		this.y = y;
+	}
+	
 }
