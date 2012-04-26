@@ -130,8 +130,8 @@ public class Motif {
                     this.x=str.length;
                     for(i=0; i<str.length;i++){
                         if("1".equals(str[i])){
-                            this.map.put(new Coordonnee(this.x, i),
-                                    new Cellule(new Coordonnee(this.x, i), true));
+                            this.map.put(new Coordonnee(i, this.y),
+                                    new Cellule(new Coordonnee(i, this.y), true));
                         }
                     }
 
