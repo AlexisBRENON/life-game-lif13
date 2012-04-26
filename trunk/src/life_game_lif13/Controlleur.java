@@ -290,6 +290,8 @@ public class Controlleur {
 			} catch (IOException ex) {
 				System.out.print("Erreur Catch\n");
 			}
+                        win.setPanelGrille(m.getGrille().getY(),m.getGrille().getX());
+                        win.doLayout();
 			win.update(m, null);
 		}
 	}

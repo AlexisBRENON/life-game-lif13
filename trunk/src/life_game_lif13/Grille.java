@@ -115,7 +115,7 @@ public class Grille {
 		int c;
 		int nbCases = x * y;
 		int voisin = 0;
-		for (c = num * (nbCases / nbThread); c < (num + 1) * (nbCases / nbThread); c++) {
+		for (c = num * (nbCases / nbThread); c < (num + 1) * (nbCases / nbThread) +1; c++) {
                         i = c % x;
 			j = c / x;
 			//test Voisin
@@ -206,6 +206,7 @@ public class Grille {
 		Date date = new Date();
 		p.clear();
 		p.store(out, "save " + dateFormat.format(date));
+                
 		for (j = 0; j < y; j++) {
 			for (i = 0; i < x; i++) {
 				Coordonnee coord = new Coordonnee(i, j);
@@ -214,6 +215,8 @@ public class Grille {
 				}
 			}
 		}
+                p.setProperty( "x", String.valueOf(x));
+                p.setProperty( "y", String.valueOf(y));
 
 		p.store(out, null);
 	}
@@ -228,15 +231,23 @@ public class Grille {
 		Boolean ok;
 		p.load(out);
 		Coordonnee coord;
+                this.x=Integer.parseInt(p.getProperty("x"));
+                this.y=Integer.parseInt(p.getProperty("y"));
+                System.out.println("grille: "+x+" "+y);
+                
 		for (j = 0; j < y; j++) {
 			for (i = 0; i < x; i++) {
 				coord = new Coordonnee(i, j);
 				property = p.getProperty(coord.toString());
 				ok = Boolean.valueOf(property).booleanValue();
-				if (ok) {
-					loadMap.put(coord, new Cellule(coord, true));
-					System.out.println("ok x: " + i + " y: " + j);
-				}
+                               
+				if(ok){
+                                     System.out.println(property);
+                                    if (property.equals("true")) {
+                                            loadMap.put(coord, new Cellule(coord, true));
+                                            System.out.println("ok x: " + i + " y: " + j);
+                                    }
+                                }
 				//p.storeToXML(out, coord.toString());
 			}
 		}

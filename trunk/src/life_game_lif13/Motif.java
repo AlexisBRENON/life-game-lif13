@@ -6,7 +6,6 @@ package life_game_lif13;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author t0rp
  */
-public class Motif {
+public final class Motif {
     private int x, y;
     private HashMap <Coordonnee, Cellule> map;
     private String name;
