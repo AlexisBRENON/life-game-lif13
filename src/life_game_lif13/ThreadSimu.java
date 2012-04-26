@@ -49,9 +49,9 @@ public class ThreadSimu extends Thread {
 				((Modele) model).endedCalcul();
 			}
 			try {
-				Thread.sleep((int) sleepTime*1000);
+				Thread.sleep((int) (sleepTime*1000));
 			} catch (InterruptedException ex) {
-				Logger.getLogger(ThreadSimu.class.getName()).log(Level.SEVERE, null, ex);
+				System.out.print("Erreur sleep");
 			}
 		}
 
