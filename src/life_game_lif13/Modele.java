@@ -126,4 +126,6 @@ public class Modele extends Observable implements Runnable {
 		return grille;
 	}
 
+
+
 }

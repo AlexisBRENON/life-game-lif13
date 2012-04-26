@@ -5,10 +5,9 @@
 package life_game_lif13;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.*;
 import javax.swing.*;
 
 /**
@@ -37,12 +36,13 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private JToggleButton _boutonPause;
 	private JButton _clearButton;
 	private JLabel _compteur;
-        private JMenuItem _itemOuvrirMotif;
-        private JPanel panelPrincipal;
+	private JMenuItem _itemOuvrirMotif;
+	private JPanel panelPrincipal;
+	private JSpinner widthSpinner;
+	private JSpinner heightSpinner;
 	/*
 	 * Fin des composants
 	 */
-    
 
 	public FenetrePrincipale (Modele m) {
 		_nbCol = m.getGrille().getX();
@@ -66,7 +66,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		JMenu menuEdition = new JMenu("Edition");
 		JMenu menuAide = new JMenu("Aide");
 		_itemOuvrir = new JMenuItem("Ouvrir...");
-                _itemOuvrirMotif = new JMenuItem("Ouvrir Motif...");
+		_itemOuvrirMotif = new JMenuItem("Ouvrir Motif...");
 		_itemEnregistrer = new JMenuItem("Enregistrer Sous...");
 		_itemQuitter = new JMenuItem("Quitter");
 		_itemAPropos = new JMenuItem("A Propos...");
@@ -74,7 +74,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		menuFichier.add(_itemEnregistrer);
 		menuFichier.add(new JSeparator());
 		menuFichier.add(_itemQuitter);
-                menuEdition.add(_itemOuvrirMotif);
+		menuEdition.add(_itemOuvrirMotif);
 		menuAide.add(_itemAPropos);
 		JMenuBar barreMenu = new JMenuBar();
 		barreMenu.add(menuFichier);
@@ -122,11 +122,25 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		_compteur = new JLabel("Nombre d'itérations : 0");
 		_clearButton = new JButton("Effacer");
 		Set<String> shapeList = patternList.keySet();
-		_shapesBox = new JComboBox(shapeList.toArray());
+		String[] shapeArray = new String[shapeList.size()];
+		shapeList.toArray(shapeArray);
+		Arrays.sort(shapeArray, String.CASE_INSENSITIVE_ORDER);
+		_shapesBox = new JComboBox(shapeArray);
 		_shapesBox.setSelectedItem("Point");
+		JPanel widthPanel = new JPanel(new GridLayout(2, 1));
+		widthSpinner = new JSpinner(new SpinnerNumberModel(_nbCol, 1, 150, 1));
+		widthPanel.add(new JLabel("Largeur :"));
+		widthPanel.add(widthSpinner);
+		JPanel heightPanel = new JPanel(new GridLayout(2, 1));
+		heightSpinner = new JSpinner(new SpinnerNumberModel(_nbLigne, 1, 150, 1));
+		widthPanel.add(new JLabel("Hauteur :"));
+		widthPanel.add(heightSpinner);
+
 		optionPanel.add(_compteur);
 		optionPanel.add(_clearButton);
 		optionPanel.add(_shapesBox);
+		optionPanel.add(widthPanel);
+		optionPanel.add(heightPanel);
 		panelPrincipal.add(optionPanel, BorderLayout.SOUTH);
 	}
 
@@ -147,7 +161,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		pattern.addPoint(0, 2);
 		patternList.put("Trait Vertical", pattern);
 
-		pattern = new Motif(2,2);
+		pattern = new Motif(2, 2);
 		pattern.addPoint(0, 0);
 		pattern.addPoint(0, 1);
 		pattern.addPoint(1, 0);
@@ -161,7 +175,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		pattern.addPoint(2, 1);
 		patternList.put("Croix Stable", pattern);
 
-		pattern = new Motif(9,9);
+		pattern = new Motif(9, 9);
 		pattern.addPoint(4, 0);
 		pattern.addPoint(4, 1);
 		pattern.addPoint(4, 2);
@@ -176,7 +190,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		pattern.addPoint(8, 4);
 		patternList.put("Croix Cyclique", pattern);
 
-		pattern = new Motif(4,5);
+		pattern = new Motif(4, 5);
 		pattern.addPoint(1, 0);
 		pattern.addPoint(2, 0);
 		pattern.addPoint(3, 0);
@@ -188,7 +202,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		pattern.addPoint(0, 3);
 		patternList.put("J", pattern);
 
-		pattern = new Motif(3,4);
+		pattern = new Motif(3, 4);
 		pattern.addPoint(1, 0);
 		pattern.addPoint(0, 1);
 		pattern.addPoint(2, 1);
@@ -239,15 +253,15 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		patternList.put("Gun (36*9)", pattern);
 
 		pattern = new Motif(3, 3);
-		pattern.addPoint(2,0);
-		pattern.addPoint(2,1);
-		pattern.addPoint(2,2);
-		pattern.addPoint(1,2);
-		pattern.addPoint(0,1);
+		pattern.addPoint(2, 0);
+		pattern.addPoint(2, 1);
+		pattern.addPoint(2, 2);
+		pattern.addPoint(1, 2);
+		pattern.addPoint(0, 1);
 		patternList.put("Planneur", pattern);
 
-		pattern = new Motif((int)(Math.random()*_nbCol/2),
-							(int)(Math.random()*_nbLigne/2));
+		pattern = new Motif((int) (Math.random() * _nbCol / 2),
+							(int) (Math.random() * _nbLigne / 2));
 		pattern.InitMotif();
 		patternList.put("Aléatoire", pattern);
 	}
@@ -270,10 +284,18 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 					}
 				}
 			}
-			_compteur.setText("Nombre d'itérations : "+Integer.toString(m.getNbIter()));
+			_compteur.setText("Nombre d'itérations : " + Integer.toString(m.getNbIter()));
 		} else {
 			System.out.println("Problème de mise à jour.");
 		}
+	}
+
+	public void updateShapeBox () {
+		Set<String> shapeList = patternList.keySet();
+		String[] shapeArray = (String[]) shapeList.toArray();
+		Arrays.sort(shapeArray, String.CASE_INSENSITIVE_ORDER);
+		_shapesBox.removeAllItems();
+		_shapesBox.addItem(shapeArray);
 	}
 
 	public JMenuItem getItemAPropos () {
@@ -328,15 +350,22 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		return _clearButton;
 	}
 
-    public JMenuItem getItemOuvrirMotif() {
-        return _itemOuvrirMotif;
-    }
+	public JMenuItem getItemOuvrirMotif () {
+		return _itemOuvrirMotif;
+	}
 
-    public void setItemOuvrirMotif(JMenuItem _itemOuvrirMotif) {
-        this._itemOuvrirMotif = _itemOuvrirMotif;
-    }
+	public void setItemOuvrirMotif (JMenuItem _itemOuvrirMotif) {
+		this._itemOuvrirMotif = _itemOuvrirMotif;
+	}
 
-        
+	public JSpinner getHeightSpinner () {
+		return heightSpinner;
+	}
+
+	public JSpinner getWidthSpinner () {
+		return widthSpinner;
+	}
+
 	public void setSelected (Object o, boolean b) {
 		if (o instanceof JPanel) {
 			if (b) {
@@ -351,38 +380,58 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		return patternList;
 	}
 
-    public void setNbCol(int _nbCol) {
-        this._nbCol = _nbCol;
-    }
+	public void setNbCol (int _nbCol) {
+		this._nbCol = _nbCol;
+	}
 
-    public void setNbLigne(int _nbLigne) {
-        this._nbLigne = _nbLigne;
-    }
+	public void setNbLigne (int _nbLigne) {
+		this._nbLigne = _nbLigne;
+	}
 
-        
-        
-        public void setPanelGrille(int lign, int col) {
-            panelPrincipal.remove(_panelGrille);
-            this._nbLigne=lign;
-            this._nbCol=col;
-               System.out.println(_nbLigne+" "+_nbCol);
-           
-            _panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
+	public void setPanelGrille (int lign, int col, final Controlleur c) {
+		panelPrincipal.remove(_panelGrille);
+		this._nbLigne = lign;
+		this._nbCol = col;
+
+		_panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
+		_cellules = new JPanel[_nbCol][_nbLigne];
 		for (int j = 0; j < _nbLigne; j++) {
 			for (int i = 0; i < _nbCol; i++) {
 				final int x = i, y = j;
 				_cellules[i][j] = new JPanel();
 				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 				_cellules[i][j].setBackground(Color.white);
+				_cellules[i][j].addMouseListener(new MouseListener() {
+
+					@Override
+					public void mouseClicked (MouseEvent e) {
+						c.onMouseClickedOnCell(e, x, y);
+					}
+
+					@Override
+					public void mousePressed (MouseEvent e) {
+					}
+
+					@Override
+					public void mouseReleased (MouseEvent e) {
+					}
+
+					@Override
+					public void mouseEntered (MouseEvent e) {
+						c.onMouseEnteredOnCell(e, x, y);
+					}
+
+					@Override
+					public void mouseExited (MouseEvent e) {
+						c.onMouseExitedCell(e, x, y);
+					}
+				});
 				_panelGrille.add(_cellules[i][j]);
 			}
 		}
-            panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
-         
-        }
-        
-        
-        
+		panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
 
-
+		_panelGrille.revalidate();
+		_panelGrille.repaint();
+	}
 }
