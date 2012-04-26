@@ -26,7 +26,7 @@ public class Motif {
         this.name=null;
         this.map= new HashMap<Coordonnee, Cellule>();
     }
-    
+
     public Motif(File file){
         this.map= new HashMap<Coordonnee, Cellule>();
         try {
@@ -38,8 +38,8 @@ public class Motif {
         }
         this.name=file.getName().substring(0, file.getName().lastIndexOf("."));
     }
-    
-    
+
+
     public Motif(int x, int y, String name) {
         this.x = x;
         this.y = y;
@@ -112,7 +112,7 @@ public class Motif {
 	public void addPoint (Coordonnee c) {
 		map.put(c, new Cellule(c));
 	}
-   	
+
         public void loadMotif(String file) throws FileNotFoundException, IOException{
         int i;
         String filePath =file;
@@ -122,20 +122,20 @@ public class Motif {
                 try {
                 String line;
                 // Lecture du fichier ligne par ligne.
-                
-                
+
+
                 while ((line = buff.readLine()) != null) {
-                    
+
                     str=line.split(" ");
-                    this.y=str.length;
+                    this.x=str.length;
                     for(i=0; i<str.length;i++){
                         if("1".equals(str[i])){
-                            this.map.put(new Coordonnee(this.x, i), 
+                            this.map.put(new Coordonnee(this.x, i),
                                     new Cellule(new Coordonnee(this.x, i), true));
                         }
                     }
-                
-                this.x++;
+
+                this.y++;
                 }
                 } finally {
                 buff.close();
