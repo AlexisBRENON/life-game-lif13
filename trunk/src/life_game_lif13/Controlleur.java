@@ -291,6 +291,41 @@ public class Controlleur {
 				System.out.print("Erreur Catch\n");
 			}
                         win.setPanelGrille(m.getGrille().getY(),m.getGrille().getX());
+                        /*Ajout des listener sur les cellules de la grilles*/
+                        for (int j = 0; j < win.getNbLigne(); j++) {
+                                for (int i = 0; i < win.getNbCol(); i++) {
+                                        final int x = i;
+                                        final int y = j;
+                                        win.getCellules()[i][j].addMouseListener(new MouseListener() {
+
+                                                @Override
+                                                public void mouseClicked (MouseEvent e) {
+                                                        onMouseClickedOnCell(e, x, y);
+                                                }
+
+                                                @Override
+                                                public void mousePressed (MouseEvent e) {
+                                                }
+
+                                                @Override
+                                                public void mouseReleased (MouseEvent e) {
+                                                }
+
+                                                @Override
+                                                public void mouseEntered (MouseEvent e) {
+                                                        onMouseEnteredOnCell(e, x, y);
+                                                }
+
+                                                @Override
+                                                public void mouseExited (MouseEvent e) {
+                                                        onMouseExitedCell(e, x, y);
+                                                }
+                                        });
+                                }
+                        }
+
+                        
+                        
                         win.doLayout();
 			win.update(m, null);
 		}
