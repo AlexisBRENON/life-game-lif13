@@ -37,9 +37,11 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private JToggleButton _boutonPause;
 	private JButton _clearButton;
 	private JLabel _compteur;
+        private JMenuItem _itemOuvrirMotif;
 	/*
 	 * Fin des composants
 	 */
+    
 
 	public FenetrePrincipale (Modele m) {
 		_nbCol = m.getGrille().getX();
@@ -63,6 +65,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		JMenu menuEdition = new JMenu("Edition");
 		JMenu menuAide = new JMenu("Aide");
 		_itemOuvrir = new JMenuItem("Ouvrir...");
+                _itemOuvrirMotif = new JMenuItem("Ouvrir Motif...");
 		_itemEnregistrer = new JMenuItem("Enregistrer Sous...");
 		_itemQuitter = new JMenuItem("Quitter");
 		_itemAPropos = new JMenuItem("A Propos...");
@@ -70,6 +73,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		menuFichier.add(_itemEnregistrer);
 		menuFichier.add(new JSeparator());
 		menuFichier.add(_itemQuitter);
+                menuEdition.add(_itemOuvrirMotif);
 		menuAide.add(_itemAPropos);
 		JMenuBar barreMenu = new JMenuBar();
 		barreMenu.add(menuFichier);
@@ -324,6 +328,15 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		return _clearButton;
 	}
 
+    public JMenuItem getItemOuvrirMotif() {
+        return _itemOuvrirMotif;
+    }
+
+    public void setItemOuvrirMotif(JMenuItem _itemOuvrirMotif) {
+        this._itemOuvrirMotif = _itemOuvrirMotif;
+    }
+
+        
 	public void setSelected (Object o, boolean b) {
 		if (o instanceof JPanel) {
 			if (b) {

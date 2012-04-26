@@ -116,7 +116,7 @@ public class Grille {
 		int nbCases = x * y;
 		int voisin = 0;
 		for (c = num * (nbCases / nbThread); c < (num + 1) * (nbCases / nbThread); c++) {
-			i = c % x;
+                        i = c % x;
 			j = c / x;
 			//test Voisin
 			if (map.containsKey(new Coordonnee(((i - 1 + x) % x), ((j - 1 + y) % y)))) {
