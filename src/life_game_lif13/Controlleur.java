@@ -113,6 +113,16 @@ public class Controlleur {
 				onOpenAction();
 			}
 		});
+                
+                win.getItemOuvrirMotif().addActionListener(
+				new ActionListener() {
+
+			@Override
+			public void actionPerformed (ActionEvent e) {
+				onOpenMotifAction();
+			}
+		});
+                
 		win.getItemQuitter().addActionListener(
 				new ActionListener() {
 					@Override
@@ -281,6 +291,19 @@ public class Controlleur {
 				System.out.print("Erreur Catch\n");
 			}
 			win.update(m, null);
+		}
+	}
+        
+        public void onOpenMotifAction () {
+		/* Ouvre la fenêtre d'ouverture et charge le fichier */
+		int result;
+		JFileChooser openWindow = new JFileChooser();
+
+		result = openWindow.showOpenDialog(win);
+		if (result == JFileChooser.APPROVE_OPTION) {
+                    Motif motif = new Motif(openWindow.getSelectedFile());
+                    win.getPatternList().put(motif.getName(), motif);
+                    win.getShapesBox().addItem(motif.getName());
 		}
 	}
 
