@@ -327,9 +327,10 @@ public class Controlleur {
                         
                         
                         win.doLayout();
-			win.update(m, null);
+			
 		}
-	}
+                win.update(m, null);
+        }
         
         public void onOpenMotifAction () {
 		/* Ouvre la fenêtre d'ouverture et charge le fichier */
