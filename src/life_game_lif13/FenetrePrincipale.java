@@ -258,8 +258,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	}
 
 	@Override
-	public void update (Observable o,
-						Object arg) {
+	public void update (Observable o, Object arg) {
 		if (o instanceof Modele) {
 			Modele m = (Modele) o;
 			for (int i = 0; i < _nbCol; i++) {
