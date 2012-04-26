@@ -233,7 +233,16 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		pattern.addPoint(35, 3);
 		patternList.put("Gun (36*9)", pattern);
 
-		pattern = new Motif((int)(Math.random()*_nbCol),(int)(Math.random()*_nbLigne));
+		pattern = new Motif(3, 3);
+		pattern.addPoint(2,0);
+		pattern.addPoint(2,1);
+		pattern.addPoint(2,2);
+		pattern.addPoint(1,2);
+		pattern.addPoint(0,1);
+		patternList.put("Planneur", pattern);
+
+		pattern = new Motif((int)(Math.random()*_nbCol/2),
+							(int)(Math.random()*_nbLigne/2));
 		pattern.InitMotif();
 		patternList.put("Aléatoire", pattern);
 	}

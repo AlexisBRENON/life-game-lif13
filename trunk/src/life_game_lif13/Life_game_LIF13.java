@@ -14,7 +14,7 @@ public class Life_game_LIF13 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-		Controlleur c = new Controlleur(10, 10, 2f, 2);
+		Controlleur c = new Controlleur(40, 40, 0.5f, 2);
 		c.startApp();
     }
 }

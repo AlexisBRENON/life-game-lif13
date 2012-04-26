@@ -224,7 +224,8 @@ public class Controlleur {
 			}
 			win.update(m, null);
 			if (((String)o).equalsIgnoreCase("Aléatoire")) {
-				Motif motif = new Motif(3, 3);
+				Motif motif = new Motif((int)(Math.random()*win.getNbCol()/2),
+										(int)(Math.random()*win.getNbLigne()/2));
 				motif.InitMotif();
 				m.setPattern(motif);
 			}
