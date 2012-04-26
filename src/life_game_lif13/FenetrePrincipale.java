@@ -38,6 +38,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private JButton _clearButton;
 	private JLabel _compteur;
         private JMenuItem _itemOuvrirMotif;
+        private JPanel panelPrincipal;
 	/*
 	 * Fin des composants
 	 */
@@ -84,7 +85,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		/*
 		 * Définition du layout principal
 		 */
-		JPanel panelPrincipal = new JPanel(new BorderLayout());
+		panelPrincipal = new JPanel(new BorderLayout());
 		this.setContentPane(panelPrincipal);
 
 		/*
@@ -350,6 +351,39 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	public HashMap<String, Motif> getPatternList () {
 		return patternList;
 	}
+
+    public void setNbCol(int _nbCol) {
+        this._nbCol = _nbCol;
+    }
+
+    public void setNbLigne(int _nbLigne) {
+        this._nbLigne = _nbLigne;
+    }
+
+        
+        
+        public void setPanelGrille(int lign, int col) {
+            panelPrincipal.remove(_panelGrille);
+            this._nbLigne=lign;
+            this._nbCol=col;
+               System.out.println(_nbLigne+" "+_nbCol);
+           
+            _panelGrille = new JPanel(new GridLayout(_nbLigne, _nbCol));
+		for (int j = 0; j < _nbLigne; j++) {
+			for (int i = 0; i < _nbCol; i++) {
+				final int x = i, y = j;
+				_cellules[i][j] = new JPanel();
+				_cellules[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+				_cellules[i][j].setBackground(Color.white);
+				_panelGrille.add(_cellules[i][j]);
+			}
+		}
+            panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
+         
+        }
+        
+        
+        
 
 
 }
