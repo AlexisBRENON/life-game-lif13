@@ -110,7 +110,7 @@ public class Grille {
 		map.putAll(mapNext);
 	}
 
-	public void threadedEtatSuivant (int nbThread, int num) {
+	public void etatSuivant (int nbThread, int num) {
 		int i, j;
 		int c;
 		int nbCases = x * y;
@@ -164,6 +164,12 @@ public class Grille {
 			//reinitialise le nombre de voisin.
 			voisin = 0;
 		}
+	}
+
+	public void swap () {
+		this.map.clear();
+		map.putAll(mapNext);
+		this.mapNext.clear();
 	}
 
 	public boolean estVivante (int x, int y) {

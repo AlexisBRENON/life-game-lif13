@@ -4,6 +4,7 @@
  */
 package life_game_lif13;
 
+import java.util.HashMap;
 import java.util.Observable;
 
 /**
@@ -12,10 +13,11 @@ import java.util.Observable;
  */
 public class Modele extends Observable implements Runnable {
     private Grille grille;
-	private ThreadSimu t;
+	private ThreadSimu thr;
 	private Motif pattern;
 	private int nbThread;
 	private int nbIter;
+	private int threadDone;
 
     public Modele(){
 		this(10,10);
@@ -30,63 +32,51 @@ public class Modele extends Observable implements Runnable {
 	}
 
 	public Modele(int x, int y, float timeStep, int nbThread) {
-		grille = new Grille(x,y);
+		this.grille = new Grille(x,y);
+		this.nbIter = 0;
+		this.thr = new ThreadSimu(timeStep, this, nbThread);
+		/* Create the threads which works on the model */
 		this.nbThread = nbThread;
-		nbIter = 0;
-		t = new ThreadSimu(timeStep, this);
-		pattern = new Motif(1, 1);
-		pattern.getMap().put(new Coordonnee(0,0),
-							 new Cellule(new Coordonnee(0,0), true));
+		/* Define the starting pattern used */
+		this.pattern = new Motif(1, 1);
+		this.pattern.addPoint(0, 0);
 	}
 
-
-	public Grille getGrille () {
-		return grille;
-	}
-
-	public void lancerThread () {
-		t.start();
-	}
-
-	public void init() {
-		nbIter = 0;
+	public void reInit() {
 		grille.initGrille();
+		nbIter = 0;
+	}
+	public void clear () {
+		grille.clearGrille();
+		nbIter = 0;
+	}
+
+	public void lancerSimulation () {
+		thr.start();
 	}
 
     @Override
     public void run() {
-        if (nbThread == 1) {
-            calcul();
-		} else {
-			try {
-				calculThreaded();
-			} catch (InterruptedException ex) {
-				System.out.println("Problème de calcul distribué");
-				calcul();
-			}
-		}
+        calcul();
+    }
+
+	public void endedCalcul () {
+		grille.swap();
 		nbIter++;
+		threadDone = 0;
 		setChanged();
 		notifyObservers();
-    }
+	}
+
+	private synchronized int getThreadNum () {
+		int result = threadDone;
+		threadDone++;
+		return result;
+	}
 
     public void calcul() {
-        grille.etatSuivant();
+		grille.etatSuivant(nbThread, getThreadNum());
     }
-
-	private void calculThreaded() throws InterruptedException {
-		Thread[] tab = new Thread[nbThread];
-		grille.getMapNext().clear();
-		for (int i = 0; i < nbThread; i++) {
-			tab[i] = new Thread(new ThreadedCalcul(nbThread, i, grille));
-			tab[i].start();
-		}
-		for (int i = 0; i < nbThread; i++) {
-			tab[i].join();
-		}
-		grille.getMap().clear();
-		grille.getMap().putAll(grille.getMapNext());
-	}
 
 	public boolean estVivante(int x, int y) {
 		return grille.estVivante(x,y);
@@ -97,31 +87,25 @@ public class Modele extends Observable implements Runnable {
 	}
 
 	public void setPaused (boolean b) {
-		t.setEtatExec(!b);
+		thr.setPaused(b);
 	}
 	public boolean isPaused () {
-		return !(t.getEtatExec());
+		return (thr.isPaused());
 	}
 	public void switchPause () {
-		t.setEtatExec(!t.getEtatExec());
-	}
-
-	public void clear () {
-		grille.clearGrille();
-		nbIter = 0;
+		thr.setPaused(!thr.isPaused());
 	}
 
 	public void addCellule (Coordonnee c) {
 		grille.addCellule(c);
 	}
-
 	public void removeCellule (Coordonnee c) {
 		grille.removeCellule(c);
 	}
-
 	public void addMotif (Coordonnee c) {
 		grille.addMotif(c, pattern);
 	}
+
 
 	public int getNbIter () {
 		return nbIter;
@@ -134,8 +118,12 @@ public class Modele extends Observable implements Runnable {
 	public Motif getPattern () {
 		return pattern;
 	}
-
 	public void setPattern (Motif pattern) {
 		this.pattern = pattern;
 	}
+
+	public Grille getGrille () {
+		return grille;
+	}
+
 }
