@@ -4,7 +4,6 @@
  */
 package life_game_lif13;
 
-import java.awt.Color;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -14,8 +13,15 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
+ * Controlleur is the controler part of the MVC. It makes the control
+ * (and not update) link between View and Model. On each useful event from the
+ * View, it update the model.
+ *
+ * @see Modele
+ * @see FenetrePrincipale
  *
  * @author alexis
+ *
  */
 public class Controlleur {
 
@@ -38,21 +44,36 @@ public class Controlleur {
 		this(width, height, 1f, nbThread);
 	}
 
+	/**
+	 * The main constructor.
+	 * @param width Width of the grid.
+	 * @param height Height of the grid.
+	 * @param timeStep Time in seconds between to update
+	 * @param nbThread Number of threads of calculation.
+	 */
 	public Controlleur (int width, int height, float timeStep, int nbThread) {
 		m = new Modele(width, height, timeStep, nbThread);
 		win = new FenetrePrincipale(m);
 		this.connectSignals();
 	}
 
+	/**
+	 * Launch the application, opening the window.
+	 */
 	public void startApp () {
 		new Thread(win).start();
 	}
-
+	/**
+	 * Lanch the applet.
+	 */
 	public void startApplet () {
 		new Thread(win).start();
 		win.setVisible(false);
 	}
 
+	/**
+	 * Connect all Listeners between the View and the controller.
+	 */
 	private void connectSignals () {
 		/*
 		 * Ajout des addlistener sur les différents éléments de la fenetre
@@ -199,10 +220,17 @@ public class Controlleur {
 		});
 	}
 
+	/**
+	 * The exiting function.
+	 * It's called when the user close the window or click on the Quit item.
+	 */
 	private void onQuitAction () {
 		System.exit(0);
 	}
-
+	/**
+	 * Launch the game, starting the simulation.
+	 * @param e
+	 */
 	private void onLaunchAction (ActionEvent e) {
 		Object o;
 		o = e.getSource();
@@ -216,6 +244,10 @@ public class Controlleur {
 		}
 	}
 
+	/**
+	 * Pause the simulation.
+	 * @param e
+	 */
 	private void onPauseAction (ActionEvent e) {
 		/*
 		 * Met en pause le jeu
@@ -228,6 +260,9 @@ public class Controlleur {
 		}
 	}
 
+	/**
+	 * Init the game, randomly.
+	 */
 	private void onInitAction () {
 		/*
 		 * Initialise la grille aléatoirement
@@ -239,7 +274,12 @@ public class Controlleur {
 		win.update(m, null);
 		m.setPaused(currentState);
 	}
-
+	/**
+	 * Display the selected item on the grid when the mouse enter on it.
+	 * @param e
+	 * @param x The x-coord of the cell where the mouse is on.
+	 * @param y The y-coord of the cell where the mouse is on.
+	 */
 	public void onMouseEnteredOnCell (MouseEvent e, int x, int y) {
 		/*
 		 * Assombri les cellules recouvertes par le pattern
@@ -254,7 +294,12 @@ public class Controlleur {
 			}
 		}
 	}
-
+	/**
+	 * Add the pattern selected where the mouse is.
+	 * @param e
+	 * @param x The x-coord of the cell where the mouse is on.
+	 * @param y The y-coord of the cell where the mouse is on.
+	 */
 	public void onMouseClickedOnCell (MouseEvent e, int x, int y) {
 		/*
 		 * Un pattern ou supprime UNE cellule
@@ -275,7 +320,12 @@ public class Controlleur {
 			}
 		}
 	}
-
+	/**
+	 * Reinit the color of the cells which are not covered by the pattern.
+	 * @param e
+	 * @param x The x-coord of the cell where the mouse is on.
+	 * @param y The y-coord of the cell where the mouse is on.
+	 */
 	public void onMouseExitedCell (MouseEvent e, int x, int y) {
 		/*
 		 * Réinitialise la couleur des cellules mises en évidences
@@ -291,6 +341,9 @@ public class Controlleur {
 		}
 	}
 
+	/**
+	 * Open a SaveAs dialog box to save the current configuration of the grid.
+	 */
 	public void onSaveAction () {
 		/*
 		 * Ouvre une fenêtre de sauvegarde de fichier et lance la sauvegarde
@@ -303,16 +356,23 @@ public class Controlleur {
 			try {
 				m.getGrille().save(
 						saveWindow.getSelectedFile().getAbsolutePath());
+				JOptionPane.showMessageDialog(win,
+											  "Sauvegarde effectuée.",
+											  "Succès",
+											  JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException ex) {
-				Logger.getLogger(FenetrePrincipale.class.getName()).
-						log(Level.SEVERE,
-							null,
-							ex);
+				JOptionPane.showMessageDialog(win,
+											  "Echec de la sauvegarde :\n" +
+											  ex.getLocalizedMessage(),
+											  "Erreur",
+											  JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
 	}
-
+	/**
+	 * Open an open dialog box to load a grid configuration.
+	 */
 	public void onOpenAction () {
 		/*
 		 * Ouvre la fenêtre d'ouverture et charge le fichier
@@ -326,13 +386,21 @@ public class Controlleur {
 				m.getGrille().load(
 						openWindow.getSelectedFile().getAbsolutePath());
 			} catch (IOException ex) {
-				System.out.print("Erreur Catch\n");
+				System.out.print("Erreur de chargement\n");
+				JOptionPane.showMessageDialog(win,
+											  "Echec du chargement :\n"+
+											  ex.getLocalizedMessage(),
+											  "Erreur",
+											  JOptionPane.ERROR_MESSAGE);
 			}
 			win.setPanelGrille(m.getGrille().getY(), m.getGrille().getX(), this);
 			win.update(m, null);
 		}
 	}
 
+	/**
+	 * Open an open dialog box to load a new pattern.
+	 */
 	public void onOpenMotifAction () {
 		/*
 		 * Ouvre la fenêtre d'ouverture et charge le fichier
@@ -348,6 +416,9 @@ public class Controlleur {
 		}
 	}
 
+	/**
+	 * Clear all the grid to make place clean.
+	 */
 	public void onClearAction () {
 		/*
 		 * Efface la grille
@@ -359,6 +430,10 @@ public class Controlleur {
 		m.setPaused(currentState);
 	}
 
+	/**
+	 * Change the selected pattern to add.
+	 * @param e
+	 */
 	public void onShapesBoxSelectionChanged (ActionEvent e) {
 		/*
 		 * Change le pattern d'ajout
@@ -373,6 +448,10 @@ public class Controlleur {
 		}
 	}
 
+	/**
+	 * Change the width of the grid.
+	 * @param e
+	 */
 	public void onWidthChanged (ChangeEvent e) {
 		boolean currentState = m.isPaused();
 		m.setPaused(true);
@@ -382,7 +461,10 @@ public class Controlleur {
 		m.getGrille().setX((Integer) ((JSpinner) e.getSource()).getValue());
 		m.setPaused(currentState);
 	}
-
+	/**
+	 * Change the height of the grid.
+	 * @param e
+	 */
 	public void onHeightChanged (ChangeEvent e) {
 		boolean currentState = m.isPaused();
 		m.setPaused(true);
@@ -393,6 +475,11 @@ public class Controlleur {
 		m.setPaused(currentState);
 	}
 
+	/**
+	 * Getter for the JApplet.
+	 * @return The main window.
+	 * @see FenetrePrincipale
+	 */
 	public FenetrePrincipale getWin () {
 		return win;
 	}
