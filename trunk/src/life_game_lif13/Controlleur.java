@@ -344,7 +344,7 @@ public class Controlleur {
 	/**
 	 * Open a SaveAs dialog box to save the current configuration of the grid.
 	 */
-	public void onSaveAction () {
+	private void onSaveAction () {
 		/*
 		 * Ouvre une fenêtre de sauvegarde de fichier et lance la sauvegarde
 		 */
@@ -373,7 +373,7 @@ public class Controlleur {
 	/**
 	 * Open an open dialog box to load a grid configuration.
 	 */
-	public void onOpenAction () {
+	private void onOpenAction () {
 		/*
 		 * Ouvre la fenêtre d'ouverture et charge le fichier
 		 */
@@ -419,7 +419,7 @@ public class Controlleur {
 	/**
 	 * Clear all the grid to make place clean.
 	 */
-	public void onClearAction () {
+	private void onClearAction () {
 		/*
 		 * Efface la grille
 		 */
@@ -434,7 +434,7 @@ public class Controlleur {
 	 * Change the selected pattern to add.
 	 * @param e
 	 */
-	public void onShapesBoxSelectionChanged (ActionEvent e) {
+	private void onShapesBoxSelectionChanged (ActionEvent e) {
 		/*
 		 * Change le pattern d'ajout
 		 */
@@ -452,7 +452,7 @@ public class Controlleur {
 	 * Change the width of the grid.
 	 * @param e
 	 */
-	public void onWidthChanged (ChangeEvent e) {
+	private void onWidthChanged (ChangeEvent e) {
 		boolean currentState = m.isPaused();
 		m.setPaused(true);
 		win.setPanelGrille(win.getNbLigne(),

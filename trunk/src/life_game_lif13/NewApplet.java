@@ -14,22 +14,22 @@ import javax.swing.JLabel;
  */
 public class NewApplet extends JApplet implements Runnable {
 	private static final long serialVersionUID = 1L;
-	Controlleur c;
+	private Controlleur c;
 	/**
 	 * Méthode d'initialisation de l'applet
 	 */
     @Override
 	public void start(){
-		this.setSize(800, 600);
+        this.setSize(800, 600);
         c = new Controlleur();
-		this.add(c.getWin().getContentPane());
-		new Thread(this).start();
+	this.add(c.getWin().getContentPane());
+        new Thread(this).start();
 	}
 
 	@Override
 	public void run () {
-		this.setVisible(true);
-                c.getWin().getJMenuBar().setVisible(false);
+            this.setVisible(true);
+            c.getWin().getJMenuBar().setVisible(false);
 		//c.getWin().setVisible(false);
 	}
 
