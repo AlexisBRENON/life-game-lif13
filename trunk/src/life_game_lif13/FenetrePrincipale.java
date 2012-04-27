@@ -13,6 +13,11 @@ import javax.swing.*;
 /**
  *
  * @author alexis
+ * @class FenetrePrincipale is the View part of the MVC. It's the GUI, catching
+ * all the events from the user and displaying the model's informations.
+ * It's a window, so it extends JFrame, some thread manage the events and display,
+ * so it implements Runnable, and it's looking after Model to update display, so
+ * it implements Observer.
  */
 public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 
@@ -49,7 +54,9 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		_nbLigne = m.getGrille().getY();
 		_cellules = new JPanel[_nbCol][_nbLigne];
 		this.patternList = new HashMap<String, Motif>();
+		// Init the patterns list.
 		initPatterns();
+		// Build the components of the window.
 		build();
 	}
 
@@ -118,24 +125,29 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		/*
 		 * Ajout des infos optionnels
 		 */
-		JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 20, 0));
+		JPanel optionPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 20, 5));
+		// Création du compteur d'itérations
 		_compteur = new JLabel("Nombre d'itérations : 0");
+		// Création du bouton qui efface la grille.
 		_clearButton = new JButton("Effacer");
+		// Création de la combobox contenant les patterns disponibles (tries).
 		Set<String> shapeList = patternList.keySet();
 		String[] shapeArray = new String[shapeList.size()];
 		shapeList.toArray(shapeArray);
 		Arrays.sort(shapeArray, String.CASE_INSENSITIVE_ORDER);
 		_shapesBox = new JComboBox(shapeArray);
 		_shapesBox.setSelectedItem("Point");
+		// Creation des spinners de redimmensionnement de la grille.
 		JPanel widthPanel = new JPanel(new GridLayout(2, 1));
 		widthSpinner = new JSpinner(new SpinnerNumberModel(_nbCol, 1, 150, 1));
 		widthPanel.add(new JLabel("Largeur :"));
 		widthPanel.add(widthSpinner);
 		JPanel heightPanel = new JPanel(new GridLayout(2, 1));
 		heightSpinner = new JSpinner(new SpinnerNumberModel(_nbLigne, 1, 150, 1));
-		widthPanel.add(new JLabel("Hauteur :"));
-		widthPanel.add(heightSpinner);
+		heightPanel.add(new JLabel("Hauteur :"));
+		heightPanel.add(heightSpinner);
 
+		// Ajout de tous ces composants.
 		optionPanel.add(_compteur);
 		optionPanel.add(_clearButton);
 		optionPanel.add(_shapesBox);
@@ -144,6 +156,9 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		panelPrincipal.add(optionPanel, BorderLayout.SOUTH);
 	}
 
+	/*
+	 * Define all commons pattern, assigning a name to each of them.
+	 */
 	private void initPatterns () {
 		Motif pattern = new Motif(1, 1);
 		pattern.addPoint(0, 0);
@@ -266,11 +281,18 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		patternList.put("Aléatoire", pattern);
 	}
 
+	/*
+	 * The overrided method, lauch by the EDT.
+	 */
 	@Override
 	public void run () {
 		this.setVisible(true);
 	}
 
+	/*
+	 * The Observer overrided method. It's called each time the model call
+	 * 'notify'.
+	 */
 	@Override
 	public void update (Observable o, Object arg) {
 		if (o instanceof Modele) {
@@ -290,6 +312,10 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		}
 	}
 
+	/*
+	 * This function is called when a new pattern is inserted into the map.
+	 * it redraw the ComboBox to take in count the new pattern.
+	 */
 	public void updateShapeBox () {
 		Set<String> shapeList = patternList.keySet();
 		String[] shapeArray = (String[]) shapeList.toArray();
@@ -297,6 +323,25 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		_shapesBox.removeAllItems();
 		_shapesBox.addItem(shapeArray);
 	}
+
+
+	/*
+	 * This function is used to set more visible a cell of the grid
+	 */
+	public void setSelected (Object o, boolean b) {
+		if (o instanceof JPanel) {
+			if (b) {
+				((JPanel) o).setBackground(((JPanel) o).getBackground().darker());
+			} else {
+				((JPanel) o).setBackground(((JPanel) o).getBackground().brighter());
+			}
+		}
+	}
+
+
+	/*
+	 * GETTERS && SETTERS
+	 */
 
 	public JMenuItem getItemAPropos () {
 		return _itemAPropos;
@@ -354,26 +399,12 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		return _itemOuvrirMotif;
 	}
 
-	public void setItemOuvrirMotif (JMenuItem _itemOuvrirMotif) {
-		this._itemOuvrirMotif = _itemOuvrirMotif;
-	}
-
 	public JSpinner getHeightSpinner () {
 		return heightSpinner;
 	}
 
 	public JSpinner getWidthSpinner () {
 		return widthSpinner;
-	}
-
-	public void setSelected (Object o, boolean b) {
-		if (o instanceof JPanel) {
-			if (b) {
-				((JPanel) o).setBackground(((JPanel) o).getBackground().darker());
-			} else {
-				((JPanel) o).setBackground(((JPanel) o).getBackground().brighter());
-			}
-		}
 	}
 
 	public HashMap<String, Motif> getPatternList () {
@@ -388,6 +419,10 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		this._nbLigne = _nbLigne;
 	}
 
+	/*
+	 * This function is used to change the grid size.
+	 * It destroy the current panel, create a new one, and connect Listeners.
+	 */
 	public void setPanelGrille (int lign, int col, final Controlleur c) {
 		panelPrincipal.remove(_panelGrille);
 		this._nbLigne = lign;
@@ -431,6 +466,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		}
 		panelPrincipal.add(_panelGrille, BorderLayout.CENTER);
 
+		// Used to redraw this part of the window.
 		_panelGrille.revalidate();
 		_panelGrille.repaint();
 	}
