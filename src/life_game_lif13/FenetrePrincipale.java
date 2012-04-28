@@ -139,11 +139,11 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		_shapesBox.setSelectedItem("Point");
 		// Creation des spinners de redimmensionnement de la grille.
 		JPanel widthPanel = new JPanel(new GridLayout(2, 1));
-		widthSpinner = new JSpinner(new SpinnerNumberModel(_nbCol, 1, 150, 1));
+		widthSpinner = new JSpinner(new SpinnerNumberModel(_nbCol, 1, 250, 1));
 		widthPanel.add(new JLabel("Largeur :"));
 		widthPanel.add(widthSpinner);
 		JPanel heightPanel = new JPanel(new GridLayout(2, 1));
-		heightSpinner = new JSpinner(new SpinnerNumberModel(_nbLigne, 1, 150, 1));
+		heightSpinner = new JSpinner(new SpinnerNumberModel(_nbLigne, 1, 250, 1));
 		heightPanel.add(new JLabel("Hauteur :"));
 		heightPanel.add(heightSpinner);
 

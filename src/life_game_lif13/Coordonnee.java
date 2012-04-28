@@ -6,6 +6,8 @@ package life_game_lif13;
 
 /**
  *
+ * Coordonate representation.
+ *
  * @author alexis
  */
 public class Coordonnee {
@@ -43,6 +45,17 @@ public class Coordonnee {
 		}
 		return true;
 	}
+	
+	@Override
+    public String toString() {
+        return "("+_x+" ; "+_y+")";
+    }
+
+	@Override
+	public Coordonnee clone () {
+		return new Coordonnee(_x, _y);
+	}
+
 
 	public int getX () {
 		return _x;
@@ -59,16 +72,4 @@ public class Coordonnee {
 	public void setY (int _y) {
 		this._y = _y;
 	}
-
-    @Override
-    public String toString() {
-        return "_x=" + _x + ", _y=" + _y+"\n";
-    }
-
-	@Override
-	public Coordonnee clone () {
-		return new Coordonnee(_x, _y);
-	}
-
-
 }

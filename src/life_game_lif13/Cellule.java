@@ -6,29 +6,52 @@ package life_game_lif13;
 
 /**
  *
+ * This class represents a cell. It's currently not very used but declared to
+ * let the possibility to add new features.
+ *
  * @author t0rp
  */
 public class Cellule {
+	/**
+	 * The coordinates of the cell.
+	 */
     private Coordonnee coord;
-    private boolean etatCourant, etatSuivant;
+	/**
+	 * The current state of the cell.
+	 */
+    private boolean etatCourant;
 
     public Cellule(Coordonnee coord, boolean etat) {
         this.coord = coord;
         this.etatCourant = etat;
-        this.etatSuivant=etat;
     }
-
+	/**
+	 * Create a new active cell at coord.
+	 * @param coord The coordinates of the cell
+	 */
 	public Cellule(Coordonnee coord) {
 		this(coord, true);
 	}
-
 	public Cellule (int x, int y) {
 		this(new Coordonnee(x, y), true);
 	}
-
 	public Cellule() {
         this(new Coordonnee(), true);
     }
+
+	@Override
+    public String toString() {
+        return coord.toString()+" -> "+((Boolean) etatCourant).toString();
+    }
+
+	@Override
+    public Cellule clone () {
+		return new Cellule(coord.clone(), etatCourant);
+	}
+
+	/**
+	 * GETTERS && SETTERS
+	 */
 
     public Coordonnee getCoord() {
         return coord;
@@ -38,10 +61,6 @@ public class Cellule {
         return etatCourant;
     }
 
-    public boolean isEtatSuivant() {
-        return etatSuivant;
-    }
-
     public void setCoord(Coordonnee coord) {
         this.coord = coord;
     }
@@ -49,21 +68,4 @@ public class Cellule {
     public void setEtatCourant(boolean etatCourant) {
         this.etatCourant = etatCourant;
     }
-
-    public void setEtatSuivant(boolean etatSuivant) {
-        this.etatSuivant = etatSuivant;
-    }
-
-    @Override
-    public String toString() {
-        return "";
-        //return "Cellule{" + coord.toString() + ", etatCourant=" + etatCourant
-                //+ ", etatSuivant=" + etatSuivant + "} \n";
-    }
-
-	@Override
-    public Cellule clone () {
-		return new Cellule(coord.clone(), etatCourant);
-	}
-
 }

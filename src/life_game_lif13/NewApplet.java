@@ -5,10 +5,10 @@
 package life_game_lif13;
 
 import javax.swing.JApplet;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 
 /**
+ *
+ * The applet to insert into an HTML page.
  *
  * @author t0rp
  */
@@ -30,7 +30,5 @@ public class NewApplet extends JApplet implements Runnable {
 	public void run () {
             this.setVisible(true);
             c.getWin().getJMenuBar().setVisible(false);
-		//c.getWin().setVisible(false);
 	}
-
 }
