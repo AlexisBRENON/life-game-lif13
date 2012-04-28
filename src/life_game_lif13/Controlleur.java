@@ -27,19 +27,19 @@ public class Controlleur {
 	private Modele m;
 
 	public Controlleur () {
-		this(10, 10, 1f, 1);
+		this(10, 10, 1, 1);
 	}
 
 	public Controlleur (int width, int height) {
-		this(width, height, 1f, 1);
+		this(width, height, 1, 1);
 	}
 
 	public Controlleur (int nbThread) {
-		this(10, 10, 1f, nbThread);
+		this(10, 10, 1, nbThread);
 	}
 
 	public Controlleur (int width, int height, int nbThread) {
-		this(width, height, 1f, nbThread);
+		this(width, height, 1, nbThread);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Controlleur {
 	 * @param timeStep Time in seconds between to update
 	 * @param nbThread Number of threads of calculation.
 	 */
-	public Controlleur (int width, int height, float timeStep, int nbThread) {
+	public Controlleur (int width, int height, double timeStep, int nbThread) {
 		m = new Modele(width, height, timeStep, nbThread);
 		win = new FenetrePrincipale(m);
 		this.connectSignals();
@@ -160,6 +160,15 @@ public class Controlleur {
 					}
 				});
 
+		win.getItemAPropos().addActionListener(
+				new ActionListener() {
+
+			@Override
+			public void actionPerformed (ActionEvent e) {
+				onAboutAction();
+			}
+		});
+
 		win.getBoutonLancer().addActionListener(
 				new ActionListener() {
 
@@ -214,6 +223,14 @@ public class Controlleur {
 			@Override
 			public void stateChanged (ChangeEvent e) {
 				onHeightChanged(e);
+			}
+		});
+
+		win.getSpeedSpinner().addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged (ChangeEvent e) {
+				onSpeedChanged(e);
 			}
 		});
 	}
@@ -411,7 +428,21 @@ public class Controlleur {
 			Motif motif = new Motif(openWindow.getSelectedFile());
 			win.getPatternList().put(motif.getName(), motif);
 			win.updateShapeBox();
+			JOptionPane.showMessageDialog(win,
+									"Motif chargé !",
+									"Chargement de motif",
+									JOptionPane.INFORMATION_MESSAGE);
 		}
+	}
+
+	/**
+	 * Open the about dialog box.
+	 */
+	private void onAboutAction () {
+		JOptionPane.showMessageDialog(win,
+"Logiciel : LifeGame\nVersion : 1.0\nDéveloppé par : Alexis BRENON, Johann HOFSTETTER\n",
+									"A propos",
+									JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**
@@ -471,6 +502,10 @@ public class Controlleur {
 						   this);
 		m.getGrille().setY((Integer) ((JSpinner) e.getSource()).getValue());
 		m.setPaused(currentState);
+	}
+
+	public void onSpeedChanged(ChangeEvent e) {
+		m.setSpeed((Double) ((JSpinner)e.getSource()).getValue());
 	}
 
 	/**

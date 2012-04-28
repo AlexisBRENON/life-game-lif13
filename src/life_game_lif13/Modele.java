@@ -4,7 +4,6 @@
  */
 package life_game_lif13;
 
-import java.util.HashMap;
 import java.util.Observable;
 
 /**
@@ -36,7 +35,7 @@ public class Modele extends Observable implements Runnable {
 	}
 
 	public Modele(int x, int y, int nbThread){
-		this(x, y, 1f, nbThread);
+		this(x, y, 1, nbThread);
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class Modele extends Observable implements Runnable {
 	 * @param timeStep The number of seconds between each iteration (default : 1)
 	 * @param nbThread Number of threads of calculation (default : 1)
 	 */
-	public Modele(int x, int y, float timeStep, int nbThread) {
+	public Modele(int x, int y, double timeStep, int nbThread) {
 		this.grille = new Grille(x,y);
 		this.nbIter = 0;
 		/* Create the thread which works on the model */
@@ -173,5 +172,9 @@ public class Modele extends Observable implements Runnable {
 
 	public Grille getGrille () {
 		return grille;
+	}
+
+	public void setSpeed (Double d) {
+		thr.setSleepTime(d);
 	}
 }
