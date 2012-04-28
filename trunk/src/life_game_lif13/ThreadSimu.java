@@ -27,7 +27,7 @@ public class ThreadSimu extends Thread {
 	/**
 	 * The time in seconds between every run() call.
 	 */
-	private float sleepTime;
+	private double sleepTime;
 	/**
 	 * Setting paused at true makes the thread to pause.
 	 */
@@ -43,7 +43,7 @@ public class ThreadSimu extends Thread {
 	 * @param runnable The Runnable object which is executed by the thread.
 	 * @param nbThread Number of threads working on the runnable.
 	 */
-    public ThreadSimu(float sleepTime, Runnable runnable, int nbThread) {
+    public ThreadSimu(double sleepTime, Runnable runnable, int nbThread) {
         super();
 		this.runnable = runnable;
         this.sleepTime = sleepTime;
@@ -53,7 +53,7 @@ public class ThreadSimu extends Thread {
 	}
 
 	/**
-	 * The overrided method called when the start() method of the Thread object
+	 * The override method called when the start() method of the Thread object
 	 * is invoked.
 	 * This function create nbThread threads and launch them to work on the
 	 * runnable object. When all threads are done. This function call the
@@ -100,11 +100,11 @@ public class ThreadSimu extends Thread {
 		this.paused = paused;
 	}
 
-	public float getSleepTime () {
+	public double getSleepTime () {
 		return sleepTime;
 	}
 
-	public void setSleepTime (float sleepTime) {
+	public void setSleepTime (double sleepTime) {
 		this.sleepTime = sleepTime;
 	}
 

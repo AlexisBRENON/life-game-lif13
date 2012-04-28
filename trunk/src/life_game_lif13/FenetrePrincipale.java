@@ -45,6 +45,7 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 	private JPanel panelPrincipal;
 	private JSpinner widthSpinner;
 	private JSpinner heightSpinner;
+	private JSpinner _speedSpinner;
 	/*
 	 * Fin des composants
 	 */
@@ -147,12 +148,19 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		heightPanel.add(new JLabel("Hauteur :"));
 		heightPanel.add(heightSpinner);
 
+		// Création d'un spinner pour le temps de pause
+		JPanel speedPanel = new JPanel (new GridLayout(2, 1));
+		_speedSpinner = new JSpinner(new SpinnerNumberModel(0.5, 0.09, 15, 0.05));
+		speedPanel.add(new JLabel ("Pause (sec)"));
+		speedPanel.add(_speedSpinner);
+
 		// Ajout de tous ces composants.
 		optionPanel.add(_compteur);
 		optionPanel.add(_clearButton);
 		optionPanel.add(_shapesBox);
 		optionPanel.add(widthPanel);
 		optionPanel.add(heightPanel);
+		optionPanel.add(speedPanel);
 		panelPrincipal.add(optionPanel, BorderLayout.SOUTH);
 	}
 
@@ -227,6 +235,17 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		pattern.addPoint(0, 3);
 		pattern.addPoint(2, 3);
 		patternList.put("A", pattern);
+
+		pattern = new Motif(3, 3);
+		pattern.addPoint(0, 0);
+		pattern.addPoint(0, 1);
+		pattern.addPoint(0, 2);
+		pattern.addPoint(1, 2);
+		pattern.addPoint(2, 2);
+		pattern.addPoint(2, 1);
+		pattern.addPoint(2, 0);
+		pattern.setName("U");
+		patternList.put(pattern.getName(), pattern);
 
 		pattern = new Motif(36, 9);
 		pattern.addPoint(0, 4);
@@ -419,6 +438,10 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		this._nbLigne = _nbLigne;
 	}
 
+	public JSpinner getSpeedSpinner () {
+		return _speedSpinner;
+	}
+
 	/*
 	 * This function is used to change the grid size.
 	 * It destroy the current panel, create a new one, and connect Listeners.
@@ -469,5 +492,8 @@ public class FenetrePrincipale extends JFrame implements Runnable, Observer {
 		// Used to redraw this part of the window.
 		_panelGrille.revalidate();
 		_panelGrille.repaint();
+
+		widthSpinner.setValue(_nbCol);
+		heightSpinner.setValue(_nbLigne);
 	}
 }

@@ -16,7 +16,7 @@ public class Life_game_LIF13 {
      */
     public static void main(String[] args) {
 		// Create a controler and launch the application.
-		Controlleur c = new Controlleur(20, 20, 0.25f, 2);
+		Controlleur c = new Controlleur(20, 20, 0.5, 1);
 		c.startApp();
     }
 }
