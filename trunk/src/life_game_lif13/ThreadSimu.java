@@ -4,39 +4,68 @@
  */
 package life_game_lif13;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
+ *
+ * A ThreadSimu is a thread which execute its task with a time and which can be
+ * paused.
+ * @see Thread
  *
  * @author Alexis
  *
- * Extends Thread. Execute run() of the runnable object every sleepTime second
- * and if paused is false.
  */
 public class ThreadSimu extends Thread {
-    private Runnable model;
+	/**
+	 * The runnable object. After sleepTime seconds, the thread call the run
+	 * method of this object.
+	 * @see Runnable
+	 */
+    private Runnable runnable;
+	/**
+	 * Number of threads working on the runnable.
+	 */
 	private int nbThread;
+	/**
+	 * The time in seconds between every run() call.
+	 */
 	private float sleepTime;
+	/**
+	 * Setting paused at true makes the thread to pause.
+	 */
     private boolean paused;
+	/**
+	 * Setting stopped at true makes the thread to stop.
+	 */
 	private boolean stopped;
 
-    public ThreadSimu(float sleepTime, Runnable model, int nbThread) {
+	/**
+	 * Main constructor.
+	 * @param sleepTime The time in seconds between each call to run().
+	 * @param runnable The Runnable object which is executed by the thread.
+	 * @param nbThread Number of threads working on the runnable.
+	 */
+    public ThreadSimu(float sleepTime, Runnable runnable, int nbThread) {
         super();
-		this.model = model;
+		this.runnable = runnable;
         this.sleepTime = sleepTime;
         this.paused = false;
 		this.stopped = false;
 		this.nbThread = nbThread;
 	}
 
+	/**
+	 * The overrided method called when the start() method of the Thread object
+	 * is invoked.
+	 * This function create nbThread threads and launch them to work on the
+	 * runnable object. When all threads are done. This function call the
+	 * endedCalcul() method of the runnable object to finalize all calculations.
+	 */
 	@Override
 	public void run () {
 		while (!stopped) {
 			if (!paused) {
 				Thread[] threads = new Thread[nbThread];
 				for (int i = 0; i < nbThread; i++) {
-					threads[i] = new Thread(model);
+					threads[i] = new Thread(runnable);
 					threads[i].start();
 				}
 				for (int i = 0; i < nbThread; i++) {
@@ -46,7 +75,7 @@ public class ThreadSimu extends Thread {
 						System.out.println("Erreur Multi-thread.");
 					}
 				}
-				((Modele) model).endedCalcul();
+				((Modele) runnable).endedCalcul();
 			}
 			try {
 				Thread.sleep((int) (sleepTime*1000));
@@ -56,6 +85,12 @@ public class ThreadSimu extends Thread {
 		}
 
 	}
+
+	/**
+	 *
+	 * GETTERS && SETTERS
+	 *
+	 */
 
 	public boolean isPaused () {
 		return paused;
