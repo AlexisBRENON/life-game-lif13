@@ -268,11 +268,6 @@ public class Controlleur {
 		 * Met en pause le jeu
 		 */
 		m.switchPause();
-		Object o;
-		o = e.getSource();
-		if (o instanceof JToggleButton) {
-			((JToggleButton) o).setSelected(((JToggleButton) o).isSelected());
-		}
 	}
 
 	/**
